@@ -134,10 +134,33 @@ export async function placeOrderAction(
   const totals = computeOrderTotals(cart, 0, 0);
   const orderCode = generateOrderCode();
   const trackingToken = generateTrackingToken();
-  const _addressSnapshot = createAddressSnapshot(form.address);
-  void _addressSnapshot;
+  const addressSnapshot = createAddressSnapshot(form.address);
+
+  const orderSnapshot = {
+    code: orderCode,
+    trackingToken,
+    items: cart.items.map((item) => ({
+      productName: item.productName,
+      variantName: item.variantName,
+      quantity: item.quantity,
+      lineTotal: item.lineTotal,
+    })),
+    address: addressSnapshot,
+    email: form.email,
+    phone: form.phone,
+    subtotal: totals.subtotal,
+    shippingTotal: totals.shippingTotal,
+    discountTotal: totals.discountTotal,
+    grandTotal: totals.grandTotal,
+  };
 
   const cookieStore = await cookies();
+  cookieStore.set("nexora_order_snapshot", JSON.stringify(orderSnapshot), {
+    httpOnly: true,
+    sameSite: "lax",
+    maxAge: 600,
+    path: "/",
+  });
   cookieStore.delete(CART_COOKIE_NAME);
 
   redirect(`/don-hang/${orderCode}?token=${trackingToken}&total=${totals.grandTotal}`);

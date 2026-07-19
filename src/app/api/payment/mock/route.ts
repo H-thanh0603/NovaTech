@@ -29,6 +29,11 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL(`/don-hang/${orderCode}?status=cancelled`, request.url));
   }
 
+  if (action === "fail") {
+    updatePaymentStatus(paymentId, "FAILED");
+    return NextResponse.redirect(new URL(`/don-hang/${orderCode}?status=failed`, request.url));
+  }
+
   const numericAmount = parseInt(amount, 10);
   if (Number.isNaN(numericAmount)) {
     return NextResponse.json({ error: "Số tiền không hợp lệ." }, { status: 400 });

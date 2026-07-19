@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { CheckCircle, XCircle, Package } from "lucide-react";
 
@@ -9,6 +10,19 @@ import { formatVnd } from "@/features/catalog/catalog.service";
 export const metadata: Metadata = {
   title: "Đơn hàng",
   description: "Trạng thái đơn hàng Nexora.",
+};
+
+type OrderSnapshot = {
+  code: string;
+  trackingToken: string;
+  items: Array<{ productName: string; variantName: string; quantity: number; lineTotal: number }>;
+  address: { name: string; phone: string; province: string; district: string; ward: string; line1: string };
+  email: string;
+  phone: string;
+  subtotal: number;
+  shippingTotal: number;
+  discountTotal: number;
+  grandTotal: number;
 };
 
 type SearchParams = Promise<{
@@ -27,6 +41,18 @@ export default async function OrderConfirmationPage({
   const { code } = await params;
   const { token, total, status } = await searchParams;
   const totalAmount = total ? parseInt(total, 10) : 0;
+
+  const cookieStore = await cookies();
+  const snapshotRaw = cookieStore.get("nexora_order_snapshot")?.value;
+  let snapshot: OrderSnapshot | null = null;
+  if (snapshotRaw) {
+    try {
+      const parsed = JSON.parse(snapshotRaw) as OrderSnapshot;
+      if (parsed.code === code) snapshot = parsed;
+    } catch {
+      snapshot = null;
+    }
+  }
 
   const isSuccess = status === "success" || (!status && code);
   const isFailed = status === "failed";
@@ -69,6 +95,68 @@ export default async function OrderConfirmationPage({
                   ) : null}
                 </div>
 
+                {snapshot ? (
+                  <div className="mt-6 rounded-panel border border-slate-200 bg-white p-6 text-left">
+                    <h2 className="font-display text-lg font-bold text-midnight">Chi tiết đơn hàng</h2>
+                    <ul className="mt-4 flex flex-col gap-3">
+                      {snapshot.items.map((item, index) => (
+                        <li key={index} className="flex items-center justify-between gap-2 text-sm">
+                          <span className="text-slate-600">{item.productName} ({item.variantName}) × {item.quantity}</span>
+                          <span className="font-semibold text-midnight">{formatVnd(item.lineTotal)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-4 border-t border-slate-200 pt-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-500">Tạm tính</span>
+                        <span className="text-sm font-semibold text-midnight">{formatVnd(snapshot.subtotal)}</span>
+                      </div>
+                      {snapshot.shippingTotal > 0 ? (
+                        <div className="mt-2 flex items-center justify-between">
+                          <span className="text-sm text-slate-500">Phí giao hàng</span>
+                          <span className="text-sm font-semibold text-midnight">{formatVnd(snapshot.shippingTotal)}</span>
+                        </div>
+                      ) : null}
+                      {snapshot.discountTotal > 0 ? (
+                        <div className="mt-2 flex items-center justify-between">
+                          <span className="text-sm text-slate-500">Giảm giá</span>
+                          <span className="text-sm font-semibold text-teal-tech">-{formatVnd(snapshot.discountTotal)}</span>
+                        </div>
+                      ) : null}
+                      <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3">
+                        <span className="font-display text-base font-bold text-midnight">Tổng cộng</span>
+                        <span className="font-display text-xl font-bold text-electric">{formatVnd(snapshot.grandTotal)}</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+
+                {snapshot ? (
+                  <div className="mt-6 rounded-panel border border-slate-200 bg-white p-6 text-left">
+                    <h2 className="font-display text-lg font-bold text-midnight">Thông tin giao hàng</h2>
+                    <dl className="mt-4 flex flex-col gap-2">
+                      <div className="flex items-center justify-between">
+                        <dt className="text-sm text-slate-500">Người nhận</dt>
+                        <dd className="text-sm font-semibold text-midnight">{snapshot.address.name}</dd>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <dt className="text-sm text-slate-500">Số điện thoại</dt>
+                        <dd className="text-sm font-semibold text-midnight">{snapshot.phone}</dd>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <dt className="text-sm text-slate-500">Email</dt>
+                        <dd className="text-sm font-semibold text-midnight">{snapshot.email}</dd>
+                      </div>
+                      <div className="flex items-start justify-between gap-4">
+                        <dt className="text-sm text-slate-500">Địa chỉ</dt>
+                        <dd className="text-right text-sm font-semibold text-midnight">
+                          {snapshot.address.line1}, {snapshot.address.ward}, {snapshot.address.district}, {snapshot.address.province}
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                ) : null}
+
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
                   <Link href="/san-pham" className="inline-flex min-h-12 items-center justify-center rounded-full bg-electric px-6 text-sm font-bold text-white hover:bg-blue-700">
                     Tiếp tục mua sắm
@@ -89,7 +177,7 @@ export default async function OrderConfirmationPage({
                   Thanh toán thất bại
                 </h1>
                 <p className="mt-3 text-sm leading-7 text-slate-600">
-                  Thanht toán cho đơn hàng <span className="font-bold text-midnight">{code}</span> chưa thành công. Vui lòng thử lại.
+                  Thanh toán cho đơn hàng <span className="font-bold text-midnight">{code}</span> chưa thành công. Vui lòng thử lại.
                 </p>
                 <Link href="/thanh-toan" className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-electric px-6 text-sm font-bold text-white hover:bg-blue-700">
                   Thử lại

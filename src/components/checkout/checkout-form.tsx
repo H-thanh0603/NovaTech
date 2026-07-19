@@ -4,6 +4,7 @@ import { useActionState } from "react";
 
 import { formatVnd } from "@/features/catalog/catalog.service";
 import type { Cart } from "@/features/cart/cart.types";
+import { CouponPreview } from "@/components/payment/coupon-preview";
 import { placeOrderAction } from "@/features/checkout/checkout.actions";
 
 type CheckoutFormProps = Readonly<{
@@ -71,6 +72,9 @@ export function CheckoutForm({ cart }: CheckoutFormProps) {
           <div>
             <label htmlFor="couponCode" className="text-sm font-semibold text-slate-600">Mã giảm giá (tùy chọn)</label>
             <input id="couponCode" name="couponCode" type="text" className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-700 focus:border-electric focus:outline-none" placeholder="NEXORA5" />
+            <div className="mt-2">
+              <CouponPreview subtotal={cart.subtotal} />
+            </div>
           </div>
         </div>
 
