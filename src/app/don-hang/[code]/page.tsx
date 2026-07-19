@@ -19,6 +19,7 @@ type OrderSnapshot = {
   address: { name: string; phone: string; province: string; district: string; ward: string; line1: string };
   email: string;
   phone: string;
+  couponCode?: string;
   subtotal: number;
   shippingTotal: number;
   discountTotal: number;
@@ -119,7 +120,7 @@ export default async function OrderConfirmationPage({
                       ) : null}
                       {snapshot.discountTotal > 0 ? (
                         <div className="mt-2 flex items-center justify-between">
-                          <span className="text-sm text-slate-500">Giảm giá</span>
+                          <span className="text-sm text-slate-500">Giảm giá{snapshot.couponCode ? ` (${snapshot.couponCode})` : ""}</span>
                           <span className="text-sm font-semibold text-teal-tech">-{formatVnd(snapshot.discountTotal)}</span>
                         </div>
                       ) : null}

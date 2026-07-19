@@ -12,7 +12,7 @@ import {
   updateItemQuantity,
   validateQuantity,
 } from "@/features/cart/cart.service";
-import type { Cart } from "@/features/cart/cart.types";
+import type { Cart, CartItem } from "@/features/cart/cart.types";
 import {
   CART_COOKIE_MAX_AGE,
   CART_COOKIE_NAME,
@@ -28,6 +28,7 @@ import {
   validateCartForCheckout,
   validateCheckoutForm,
 } from "@/features/checkout/checkout.service";
+import { validateCoupon } from "@/features/payment/coupon.service";
 import type { CheckoutFormState } from "@/features/cart/cart.types";
 
 async function getCartFromCookie(): Promise<Cart> {
@@ -131,7 +132,34 @@ export async function placeOrderAction(
     return { success: false, error: cartErrors[0] };
   }
 
-  const totals = computeOrderTotals(cart, 0, 0);
+  const repository = new InMemoryCatalogRepository();
+  const verifiedItems: CartItem[] = [];
+  for (const item of cart.items) {
+    try {
+      const verified = await createCartItem(repository, item.productSlug, item.sku, item.quantity);
+      verifiedItems.push(verified);
+    } catch {
+      return { success: false, error: `Sản phẩm ${item.productName} không còn khả dụng.` };
+    }
+  }
+
+  const verifiedSubtotal = verifiedItems.reduce((sum, item) => sum + item.lineTotal, 0);
+
+  let discountTotal = 0;
+  const shippingTotal = 0;
+  if (form.couponCode) {
+    const couponResult = validateCoupon(form.couponCode, verifiedSubtotal, shippingTotal);
+    if (!couponResult.valid) {
+      return { success: false, error: couponResult.error };
+    }
+    discountTotal = couponResult.discountTotal;
+  }
+
+  const totals = computeOrderTotals(
+    { ...cart, subtotal: verifiedSubtotal, items: Object.freeze(verifiedItems) },
+    shippingTotal,
+    discountTotal,
+  );
   const orderCode = generateOrderCode();
   const trackingToken = generateTrackingToken();
   const addressSnapshot = createAddressSnapshot(form.address);
@@ -139,12 +167,13 @@ export async function placeOrderAction(
   const orderSnapshot = {
     code: orderCode,
     trackingToken,
-    items: cart.items.map((item) => ({
+    items: verifiedItems.map((item) => ({
       productName: item.productName,
       variantName: item.variantName,
       quantity: item.quantity,
       lineTotal: item.lineTotal,
     })),
+    couponCode: form.couponCode || undefined,
     address: addressSnapshot,
     email: form.email,
     phone: form.phone,
