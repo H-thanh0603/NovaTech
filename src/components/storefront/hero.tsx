@@ -26,7 +26,7 @@ export function Hero() {
             Nexora giải thích điều đáng tiền, điểm cần cân nhắc và lựa chọn phù hợp nhất — để bạn mua đúng ngay từ đầu.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Link href="#featured" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-sm font-bold text-midnight transition-transform hover:-translate-y-0.5">
+            <Link href="/san-pham" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-sm font-bold text-midnight transition-transform hover:-translate-y-0.5">
               Khám phá sản phẩm <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
             <Link href="#setup" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-bold text-white transition-colors hover:bg-white/10">

@@ -25,8 +25,8 @@ describe("storefront content", () => {
   it("does not disguise unavailable footer pages as product links", () => {
     const markup = renderToStaticMarkup(<SiteFooter />);
 
-    expect(markup).not.toContain('href="#featured"');
     expect(markup).toContain("Sắp ra mắt");
+    expect(markup).toContain('href="/san-pham"');
   });
 
   it("presents the decision details and accessible product image", () => {
@@ -50,5 +50,6 @@ describe("storefront content", () => {
     expect(markup).toContain('alt="Laptop bạc mở trên bàn"');
     expect(markup).toContain("Nhẹ và đủ mạnh cho công việc.");
     expect(markup).toContain("28.990.000");
+    expect(markup).toContain('href="/san-pham/laptop-one"');
   });
 });

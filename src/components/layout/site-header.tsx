@@ -7,10 +7,11 @@ import { useEffect, useRef, useState } from "react";
 import { BrandMark } from "@/components/brand/brand-mark";
 
 const navigation = [
-  { label: "Sản phẩm nổi bật", href: "#featured" },
-  { label: "Dựng setup", href: "#setup" },
-  { label: "Nexora Picks", href: "#picks" },
-  { label: "Cẩm nang", href: "#guides" },
+  { label: "Sản phẩm", href: "/san-pham" },
+  { label: "Sản phẩm nổi bật", href: "/#featured" },
+  { label: "Dựng setup", href: "/#setup" },
+  { label: "Nexora Picks", href: "/#picks" },
+  { label: "Cẩm nang", href: "/#guides" },
 ] as const;
 
 export function SiteHeader() {
@@ -44,7 +45,7 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="flex items-center gap-1">
-          <Link href="#featured" aria-label="Tìm sản phẩm" className="grid size-11 place-items-center rounded-full text-slate-600 transition-colors hover:bg-white hover:text-electric">
+          <Link href="/san-pham" aria-label="Tìm sản phẩm" className="grid size-11 place-items-center rounded-full text-slate-600 transition-colors hover:bg-white hover:text-electric">
             <Search className="size-5" aria-hidden="true" />
           </Link>
           <button type="button" disabled aria-label="Tài khoản — sắp ra mắt" className="hidden size-11 place-items-center rounded-full text-slate-400 disabled:cursor-not-allowed sm:grid">

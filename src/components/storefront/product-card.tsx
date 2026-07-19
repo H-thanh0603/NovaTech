@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { formatVnd } from "@/features/catalog/catalog.service";
 import type { CatalogProduct } from "@/features/catalog/catalog.types";
@@ -10,7 +11,7 @@ type ProductCardProps = Readonly<{
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-card border border-slate-200 bg-white transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/70">
+    <Link href={`/san-pham/${product.slug}`} className="group flex h-full flex-col overflow-hidden rounded-card border border-slate-200 bg-white transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/70">
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
         <Image
           src={product.imageUrl}
@@ -44,6 +45,6 @@ export function ProductCard({ product }: ProductCardProps) {
           </span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }

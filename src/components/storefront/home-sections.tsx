@@ -65,7 +65,7 @@ export function HomeSections({ products }: HomeSectionsProps) {
             <h2 id="quick-finder-title" className="shrink-0 text-sm font-bold text-midnight">Bạn đang tìm gì?</h2>
             <div className="flex gap-3 overflow-x-auto pb-2 lg:pb-0">
               {quickFinders.map(({ label, icon: Icon }) => (
-                <Link key={label} href="#featured" className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-surface px-4 text-sm font-semibold text-slate-700 transition-colors hover:border-electric hover:text-electric">
+                <Link key={label} href="/san-pham" className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-surface px-4 text-sm font-semibold text-slate-700 transition-colors hover:border-electric hover:text-electric">
                   <Icon className="size-4" aria-hidden="true" /> {label}
                 </Link>
               ))}
@@ -105,7 +105,7 @@ export function HomeSections({ products }: HomeSectionsProps) {
               <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-mint"><WandSparkles className="size-4" aria-hidden="true" /> Build Your Setup</p>
               <h2 id="setup-title" className="mt-4 font-display text-3xl font-semibold tracking-[-0.045em] sm:text-5xl">Một ngân sách. Một bộ máy thật sự hợp nhau.</h2>
               <p className="mt-5 max-w-xl text-sm leading-7 text-slate-300">Chọn mục tiêu và mức đầu tư, Nexora sẽ phân bổ hợp lý giữa thiết bị chính, màn hình và phụ kiện.</p>
-              <Link href="#featured" className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-full bg-mint px-6 text-sm font-bold text-midnight transition-transform hover:-translate-y-0.5">
+              <Link href="/san-pham" className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-full bg-mint px-6 text-sm font-bold text-midnight transition-transform hover:-translate-y-0.5">
                 Khám phá cấu hình mẫu <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             </div>

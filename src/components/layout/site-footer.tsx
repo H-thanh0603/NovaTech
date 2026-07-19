@@ -1,11 +1,36 @@
 import { Facebook, Instagram, Mail, Youtube } from "lucide-react";
+import Link from "next/link";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 
 const footerGroups = [
-  { title: "Khám phá", links: ["Laptop", "Điện thoại", "Phụ kiện", "Nexora Picks"] },
-  { title: "Hỗ trợ", links: ["Liên hệ", "Theo dõi đơn", "Bảo hành", "Đổi trả"] },
-  { title: "Về Nexora", links: ["Cách chúng tôi chọn", "Cẩm nang", "Điều khoản", "Quyền riêng tư"] },
+  {
+    title: "Khám phá",
+    links: [
+      { label: "Laptop", href: "/san-pham?category=laptop" },
+      { label: "Điện thoại", href: "/san-pham?category=dien-thoai" },
+      { label: "Phụ kiện", href: "/san-pham?category=phu-kien" },
+      { label: "Tất cả sản phẩm", href: "/san-pham" },
+    ],
+  },
+  {
+    title: "Hỗ trợ",
+    links: [
+      { label: "Liên hệ", href: null },
+      { label: "Theo dõi đơn", href: "/don-hang" },
+      { label: "Bảo hành", href: null },
+      { label: "Đổi trả", href: null },
+    ],
+  },
+  {
+    title: "Về Nexora",
+    links: [
+      { label: "Cách chúng tôi chọn", href: null },
+      { label: "Cẩm nang", href: null },
+      { label: "Điều khoản", href: null },
+      { label: "Quyền riêng tư", href: null },
+    ],
+  },
 ] as const;
 
 export function SiteFooter() {
@@ -25,12 +50,18 @@ export function SiteFooter() {
               <section key={group.title} aria-labelledby={`footer-${group.title}`}>
                 <h2 id={`footer-${group.title}`} className="text-sm font-bold text-white">{group.title}</h2>
                 <ul className="mt-4 space-y-2.5 text-sm text-slate-400">
-                  {group.links.map((label) => (
-                    <li key={label}>
-                      <span className="flex min-h-8 items-center justify-between gap-2" aria-disabled="true">
-                        <span>{label}</span>
-                        <span className="text-[9px] font-bold uppercase tracking-wide text-slate-600">Sắp ra mắt</span>
-                      </span>
+                  {group.links.map((link) => (
+                    <li key={link.label}>
+                      {link.href ? (
+                        <Link href={link.href} className="flex min-h-8 items-center gap-2 text-slate-400 hover:text-mint">
+                          {link.label}
+                        </Link>
+                      ) : (
+                        <span className="flex min-h-8 items-center justify-between gap-2" aria-disabled="true">
+                          <span>{link.label}</span>
+                          <span className="text-[9px] font-bold uppercase tracking-wide text-slate-600">Sắp ra mắt</span>
+                        </span>
+                      )}
                     </li>
                   ))}
                 </ul>
