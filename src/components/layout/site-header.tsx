@@ -48,9 +48,9 @@ export function SiteHeader() {
           <Link href="/san-pham" aria-label="Tìm sản phẩm" className="grid size-11 place-items-center rounded-full text-slate-600 transition-colors hover:bg-white hover:text-electric">
             <Search className="size-5" aria-hidden="true" />
           </Link>
-          <button type="button" disabled aria-label="Tài khoản — sắp ra mắt" className="hidden size-11 place-items-center rounded-full text-slate-400 disabled:cursor-not-allowed sm:grid">
+          <Link href="/tai-khoan" aria-label="Tài khoản" className="hidden size-11 place-items-center rounded-full text-slate-600 transition-colors hover:bg-white hover:text-electric sm:grid">
             <UserRound className="size-5" aria-hidden="true" />
-          </button>
+          </Link>
           <button type="button" disabled aria-label="Danh sách yêu thích — sắp ra mắt" className="hidden size-11 place-items-center rounded-full text-slate-400 disabled:cursor-not-allowed sm:grid">
             <Heart className="size-5" aria-hidden="true" />
           </button>

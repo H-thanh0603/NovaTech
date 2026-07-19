@@ -10,6 +10,7 @@ permissions:
 
 env:
   DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nexora?schema=public
+  AUTH_SECRET: test-secret-for-ci
 
 jobs:
   quality:

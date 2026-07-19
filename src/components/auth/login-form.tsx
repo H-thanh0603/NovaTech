@@ -1,0 +1,41 @@
+"use client";
+
+import { useActionState } from "react";
+import Link from "next/link";
+
+import { loginAction } from "@/features/auth/auth.actions";
+
+export function LoginForm() {
+  const [state, formAction] = useActionState(loginAction, null);
+
+  return (
+    <form action={formAction} className="flex flex-col gap-4">
+      {state?.error ? (
+        <p className="rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-600">{state.error}</p>
+      ) : null}
+      {state?.success ? (
+        <p className="rounded-xl bg-teal-50 px-4 py-3 text-sm font-semibold text-teal-tech">Đăng nhập thành công!</p>
+      ) : null}
+
+      <div>
+        <label htmlFor="email" className="text-sm font-semibold text-slate-600">Email</label>
+        <input id="email" name="email" type="email" required className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-700 focus:border-electric focus:outline-none" placeholder="email@example.com" />
+      </div>
+      <div>
+        <label htmlFor="password" className="text-sm font-semibold text-slate-600">Mật khẩu</label>
+        <input id="password" name="password" type="password" required className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-700 focus:border-electric focus:outline-none" placeholder="••••••••" />
+      </div>
+
+      <button type="submit" className="mt-2 inline-flex min-h-12 items-center justify-center rounded-full bg-electric px-6 text-sm font-bold text-white hover:bg-blue-700">
+        Đăng nhập
+      </button>
+
+      <p className="text-center text-sm text-slate-500">
+        Chưa có tài khoản? <Link href="/dang-ky" className="font-semibold text-electric hover:underline">Đăng ký</Link>
+      </p>
+      <p className="text-center text-xs text-slate-400">
+        Tài khoản demo: demo@nexora.vn / nexora123
+      </p>
+    </form>
+  );
+}
