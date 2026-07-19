@@ -31,7 +31,7 @@ export async function loginAction(
     path: "/",
   });
 
-  return { success: true };
+  redirect("/tai-khoan");
 }
 
 export async function registerAction(
@@ -56,7 +56,7 @@ export async function registerAction(
     path: "/",
   });
 
-  return { success: true };
+  redirect("/tai-khoan");
 }
 
 export async function logoutAction(): Promise<void> {

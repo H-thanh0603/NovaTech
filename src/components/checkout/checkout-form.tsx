@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 
 import { formatVnd } from "@/features/catalog/catalog.service";
 import type { Cart } from "@/features/cart/cart.types";
@@ -13,6 +13,7 @@ type CheckoutFormProps = Readonly<{
 
 export function CheckoutForm({ cart }: CheckoutFormProps) {
   const [state, formAction] = useActionState(placeOrderAction, null);
+  const [couponCode, setCouponCode] = useState("");
 
   if (cart.items.length === 0) {
     return (
@@ -71,9 +72,9 @@ export function CheckoutForm({ cart }: CheckoutFormProps) {
           </div>
           <div>
             <label htmlFor="couponCode" className="text-sm font-semibold text-slate-600">Mã giảm giá (tùy chọn)</label>
-            <input id="couponCode" name="couponCode" type="text" className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-700 focus:border-electric focus:outline-none" placeholder="NEXORA5" />
+            <input id="couponCode" name="couponCode" type="text" value={couponCode} onChange={(e) => setCouponCode(e.target.value)} className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-700 focus:border-electric focus:outline-none" placeholder="NEXORA5" />
             <div className="mt-2">
-              <CouponPreview subtotal={cart.subtotal} />
+              <CouponPreview subtotal={cart.subtotal} code={couponCode} />
             </div>
           </div>
         </div>

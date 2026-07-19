@@ -55,7 +55,8 @@ export default async function OrderConfirmationPage({
     }
   }
 
-  const isSuccess = status === "success" || (!status && code);
+  const isSuccess = status === "success";
+  const isPending = !status && code;
   const isFailed = status === "failed";
   const isCancelled = status === "cancelled";
 
@@ -161,6 +162,72 @@ export default async function OrderConfirmationPage({
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
                   <Link href="/san-pham" className="inline-flex min-h-12 items-center justify-center rounded-full bg-electric px-6 text-sm font-bold text-white hover:bg-blue-700">
                     Tiếp tục mua sắm
+                  </Link>
+                  <Link href="/" className="inline-flex min-h-12 items-center justify-center rounded-full border border-slate-200 px-6 text-sm font-bold text-slate-600 hover:border-electric hover:text-electric">
+                    Về trang chủ
+                  </Link>
+                </div>
+              </div>
+            ) : null}
+
+            {isPending ? (
+              <div className="text-center">
+                <div className="mx-auto grid size-16 place-items-center rounded-full bg-amber-50">
+                  <Package className="size-8 text-amber-500" aria-hidden="true" />
+                </div>
+                <h1 className="mt-6 font-display text-3xl font-semibold tracking-[-0.04em] text-midnight sm:text-4xl">
+                  Đơn hàng đã tiếp nhận
+                </h1>
+                <p className="mt-3 text-sm leading-7 text-slate-600">
+                  Đơn hàng <span className="font-bold text-midnight">{code}</span> đang chờ thanh toán.
+                </p>
+
+                <div className="mt-8 rounded-panel border border-slate-200 bg-white p-6 text-left">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                    <span className="text-sm text-slate-500">Mã đơn hàng</span>
+                    <span className="font-display text-lg font-bold text-midnight">{code}</span>
+                  </div>
+                  {totalAmount > 0 ? (
+                    <div className="mt-4 flex items-center justify-between">
+                      <span className="text-sm text-slate-500">Tổng thanh toán</span>
+                      <span className="font-display text-lg font-bold text-electric">{formatVnd(totalAmount)}</span>
+                    </div>
+                  ) : null}
+                </div>
+
+                {snapshot ? (
+                  <div className="mt-6 rounded-panel border border-slate-200 bg-white p-6 text-left">
+                    <h2 className="font-display text-lg font-bold text-midnight">Chi tiết đơn hàng</h2>
+                    <ul className="mt-4 flex flex-col gap-3">
+                      {snapshot.items.map((item, index) => (
+                        <li key={index} className="flex items-center justify-between gap-2 text-sm">
+                          <span className="text-slate-600">{item.productName} ({item.variantName}) × {item.quantity}</span>
+                          <span className="font-semibold text-midnight">{formatVnd(item.lineTotal)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-4 border-t border-slate-200 pt-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-500">Tạm tính</span>
+                        <span className="text-sm font-semibold text-midnight">{formatVnd(snapshot.subtotal)}</span>
+                      </div>
+                      {snapshot.discountTotal > 0 ? (
+                        <div className="mt-2 flex items-center justify-between">
+                          <span className="text-sm text-slate-500">Giảm giá{snapshot.couponCode ? ` (${snapshot.couponCode})` : ""}</span>
+                          <span className="text-sm font-semibold text-teal-tech">-{formatVnd(snapshot.discountTotal)}</span>
+                        </div>
+                      ) : null}
+                      <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3">
+                        <span className="font-display text-base font-bold text-midnight">Tổng cộng</span>
+                        <span className="font-display text-xl font-bold text-electric">{formatVnd(snapshot.grandTotal)}</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+                  <Link href={`/thanh-toan-gateway?paymentId=pending&orderCode=${code}&amount=${totalAmount}`} className="inline-flex min-h-12 items-center justify-center rounded-full bg-electric px-6 text-sm font-bold text-white hover:bg-blue-700">
+                    Thanh toán ngay
                   </Link>
                   <Link href="/" className="inline-flex min-h-12 items-center justify-center rounded-full border border-slate-200 px-6 text-sm font-bold text-slate-600 hover:border-electric hover:text-electric">
                     Về trang chủ
