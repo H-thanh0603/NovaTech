@@ -3,10 +3,11 @@
 import { Check, Minus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 
 import { ReviewList } from "@/components/catalog/review-list";
 import { VariantSelector } from "@/components/catalog/variant-selector";
+import { addToCartAction } from "@/features/checkout/checkout.actions";
 import type { CatalogProductDetail } from "@/features/catalog/catalog.types";
 
 type ProductDetailProps = Readonly<{
@@ -16,14 +17,10 @@ type ProductDetailProps = Readonly<{
 export function ProductDetail({ product }: ProductDetailProps) {
   const [selectedSku, setSelectedSku] = useState(product.variants[0]?.sku ?? "");
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
-  const [added, setAdded] = useState(false);
+  const [cartState, cartFormAction] = useActionState(addToCartAction, null);
 
   const activeMedia = product.media[activeMediaIndex] ?? product.media[0];
-
-  function handleAddToCart() {
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
-  }
+  const added = cartState?.success === true;
 
   return (
     <div className="mx-auto max-w-page px-4 py-8 sm:px-6 lg:px-8">
@@ -89,18 +86,23 @@ export function ProductDetail({ product }: ProductDetailProps) {
             <VariantSelector variants={product.variants} selectedSku={selectedSku} onSelect={setSelectedSku} />
           ) : null}
 
-          <button
-            type="button"
-            onClick={handleAddToCart}
-            disabled={added}
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-electric px-6 text-sm font-bold text-white transition-colors hover:bg-blue-700 disabled:bg-teal-tech"
-          >
-            {added ? (
-              <><Check className="size-4" aria-hidden="true" /> Đã thêm vào giỏ</>
-            ) : (
-              <><ShoppingBag className="size-4" aria-hidden="true" /> Thêm vào giỏ hàng</>
-            )}
-          </button>
+          <form action={cartFormAction}>
+            <input type="hidden" name="slug" value={product.slug} />
+            <input type="hidden" name="sku" value={selectedSku} />
+            <input type="hidden" name="quantity" value="1" />
+            <button
+              type="submit"
+              disabled={added}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-electric px-6 text-sm font-bold text-white transition-colors hover:bg-blue-700 disabled:bg-teal-tech"
+            >
+              {added ? (
+                <><Check className="size-4" aria-hidden="true" /> Đã thêm vào giỏ</>
+              ) : (
+                <><ShoppingBag className="size-4" aria-hidden="true" /> Thêm vào giỏ hàng</>
+              )}
+            </button>
+          </form>
+          {cartState?.error ? <p className="text-sm text-red-500">{cartState.error}</p> : null}
 
           <div className="flex flex-col gap-4">
             <div>

@@ -54,9 +54,9 @@ export function SiteHeader() {
           <button type="button" disabled aria-label="Danh sách yêu thích — sắp ra mắt" className="hidden size-11 place-items-center rounded-full text-slate-400 disabled:cursor-not-allowed sm:grid">
             <Heart className="size-5" aria-hidden="true" />
           </button>
-          <button type="button" disabled aria-label="Giỏ hàng — sắp ra mắt" className="grid size-11 place-items-center rounded-full text-slate-400 disabled:cursor-not-allowed">
+          <Link href="/gio-hang" aria-label="Giỏ hàng" className="grid size-11 place-items-center rounded-full text-slate-600 transition-colors hover:bg-white hover:text-electric">
             <ShoppingBag className="size-5" aria-hidden="true" />
-          </button>
+          </Link>
           <button
             ref={menuButtonRef}
             type="button"
