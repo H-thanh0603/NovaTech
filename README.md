@@ -4,15 +4,15 @@ Nền tảng thương mại điện tử sản phẩm công nghệ tuyển chọ
 
 ## Phạm vi hiện tại
 
-Sprint foundation hiện có:
+Các sprint đã triển khai:
 
-- Homepage responsive bằng Next.js App Router và Tailwind CSS 4.
-- Catalog demo có type và repository boundary độc lập với UI.
-- Prisma schema cho identity, catalog, cart, order, payment, coupon, review, content và audit log.
-- Seed catalog idempotent cho PostgreSQL.
-- Unit/component tests và GitHub Actions CI.
+- **Sprint 1 — Foundation:** Homepage responsive, catalog demo, Prisma schema, seed, CI.
+- **Sprint 2 — Catalog listing & product detail:** `/san-pham` với filter/sort/pagination, `/san-pham/[slug]` với gallery, variant selector, reviews.
+- **Sprint 3 — Cart & checkout:** `/gio-hang` với quantity steppers, `/thanh-toan` với address form, coupon input, server-side price resolution.
+- **Sprint 4 — Auth & user account:** `/dang-nhap`, `/dang-ky`, `/tai-khoan` với profile, address book, order history. JWT session cookie, middleware bảo vệ routes.
+- **Sprint 5 — Payment & promotions:** Mock VNPay-style payment flow, coupon validation, `/don-hang` tracking by code + phone, `/don-hang/[code]` confirmation với items và address detail.
 
-Schema commerce đã được định nghĩa nhưng các luồng đăng nhập, giỏ hàng, checkout, thanh toán và admin **chưa được triển khai**.
+Các luồng đăng nhập, giỏ hàng, checkout, thanh toán đã **được triển khai** ở mức demo (in-memory repository). Admin screens, deployment, email, analytics và real payment **chưa triển khai**.
 
 ## Yêu cầu
 
@@ -63,13 +63,19 @@ npm run build
 
 ## Kiến trúc
 
-- `src/app`: route, layout và global styles.
-- `src/components`: brand, layout và storefront compositions.
-- `src/features/catalog`: contract, demo data, repository và service catalog.
+- `src/app`: route, layout và global styles (16 routes).
+- `src/components`: brand, layout, storefront, catalog, cart, checkout, auth, payment compositions.
+- `src/features/catalog`: contract, demo data, repository (InMemory + Prisma) và service catalog.
+- `src/features/cart`: cart types, service, cookie persistence.
+- `src/features/checkout`: checkout service, server actions, types.
+- `src/features/auth`: JWT auth service, actions, edge compat, middleware.
+- `src/features/payment`: payment service, coupon service, types.
+- `src/features/coupon`: coupon types, service, data (re-export từ payment).
+- `src/lib`: cookie utilities, session utilities.
 - `prisma`: full commerce schema và seed.
 - `docs/superpowers`: design spec và implementation plan đã duyệt.
 
-React components không truy cập Prisma trực tiếp. Storefront đọc dữ liệu qua `CatalogRepository`, giúp thay demo repository bằng PostgreSQL trong vertical slice tiếp theo mà không đổi UI.
+React components không truy cập Prisma trực tiếp. Storefront đọc dữ liệu qua `CatalogRepository`. App tự chọn `InMemoryCatalogRepository` khi không có `DATABASE_URL`, hoặc `PrismaCatalogRepository` khi có.
 
 ## Tài liệu sản phẩm
 
