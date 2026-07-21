@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getPaymentStatus, updatePaymentStatus } from "@/features/payment/payment.service";
+import { updateOrderStatusByPaymentId } from "@/features/order/order.service";
 
 type Body = {
   paymentId?: string;
@@ -37,6 +38,9 @@ export async function POST(request: Request) {
   if (!updated) {
     return NextResponse.json({ error: "Failed to update payment status." }, { status: 500 });
   }
+
+  const orderStatus = status === "SUCCESS" ? "PAID" : status === "CANCELLED" ? "CANCELLED" : "FAILED";
+  updateOrderStatusByPaymentId(paymentId, orderStatus);
 
   return NextResponse.json({
     success: true,

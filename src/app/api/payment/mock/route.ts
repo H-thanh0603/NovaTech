@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { processMockPayment, updatePaymentStatus } from "@/features/payment/payment.service";
+import { updateOrderStatusByPaymentId } from "@/features/order/order.service";
 
 type SearchParams = Promise<{
   paymentId?: string;
@@ -26,11 +27,13 @@ export async function GET(request: Request) {
 
   if (action === "cancel") {
     updatePaymentStatus(paymentId, "CANCELLED");
+    updateOrderStatusByPaymentId(paymentId, "CANCELLED");
     return NextResponse.redirect(new URL(`/don-hang/${orderCode}?status=cancelled`, request.url));
   }
 
   if (action === "fail") {
     updatePaymentStatus(paymentId, "FAILED");
+    updateOrderStatusByPaymentId(paymentId, "FAILED");
     return NextResponse.redirect(new URL(`/don-hang/${orderCode}?status=failed`, request.url));
   }
 
@@ -42,8 +45,10 @@ export async function GET(request: Request) {
   const result = processMockPayment(paymentId, numericAmount);
 
   if (result.success) {
+    updateOrderStatusByPaymentId(paymentId, "PAID");
     return NextResponse.redirect(new URL(`/don-hang/${orderCode}?status=success`, request.url));
   }
 
+  updateOrderStatusByPaymentId(paymentId, "FAILED");
   return NextResponse.redirect(new URL(`/don-hang/${orderCode}?status=failed`, request.url));
 }

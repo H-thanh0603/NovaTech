@@ -1,35 +1,19 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import Link from "next/link";
-import { CheckCircle, XCircle, Package } from "lucide-react";
+import { AlertTriangle, CheckCircle, XCircle, Package } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { formatVnd } from "@/features/catalog/catalog.service";
+import { getOrderByCodeAndToken } from "@/features/order/order.service";
 
 export const metadata: Metadata = {
   title: "Đơn hàng",
   description: "Trạng thái đơn hàng Nexora.",
 };
 
-type OrderSnapshot = {
-  code: string;
-  trackingToken: string;
-  items: Array<{ productName: string; variantName: string; quantity: number; lineTotal: number }>;
-  address: { name: string; phone: string; province: string; district: string; ward: string; line1: string };
-  email: string;
-  phone: string;
-  couponCode?: string;
-  subtotal: number;
-  shippingTotal: number;
-  discountTotal: number;
-  grandTotal: number;
-};
-
 type SearchParams = Promise<{
   token?: string;
-  total?: string;
-  status?: string;
 }>;
 
 export default async function OrderConfirmationPage({
@@ -40,25 +24,42 @@ export default async function OrderConfirmationPage({
   searchParams: SearchParams;
 }>) {
   const { code } = await params;
-  const { token, total, status } = await searchParams;
-  const totalAmount = total ? parseInt(total, 10) : 0;
+  const { token } = await searchParams;
 
-  const cookieStore = await cookies();
-  const snapshotRaw = cookieStore.get("nexora_order_snapshot")?.value;
-  let snapshot: OrderSnapshot | null = null;
-  if (snapshotRaw) {
-    try {
-      const parsed = JSON.parse(snapshotRaw) as OrderSnapshot;
-      if (parsed.code === code) snapshot = parsed;
-    } catch {
-      snapshot = null;
-    }
+  const snapshot = token ? getOrderByCodeAndToken(code, token) : null;
+  const totalAmount = snapshot?.grandTotal ?? 0;
+
+  if (!snapshot) {
+    return (
+      <>
+        <SiteHeader />
+        <main className="bg-surface">
+          <div className="mx-auto max-w-page px-4 py-16 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <div className="mx-auto grid size-16 place-items-center rounded-full bg-amber-50">
+                <AlertTriangle className="size-8 text-amber-500" aria-hidden="true" />
+              </div>
+              <h1 className="mt-6 font-display text-3xl font-semibold tracking-[-0.04em] text-midnight sm:text-4xl">
+                Không tìm thấy đơn hàng
+              </h1>
+              <p className="mt-3 text-sm leading-7 text-slate-600">
+                Mã đơn hàng hoặc liên kết theo dõi không hợp lệ. Vui lòng kiểm tra lại email xác nhận hoặc tra cứu bằng số điện thoại.
+              </p>
+              <Link href="/don-hang" className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-electric px-6 text-sm font-bold text-white hover:bg-blue-700">
+                Tra cứu đơn hàng
+              </Link>
+            </div>
+          </div>
+        </main>
+        <SiteFooter />
+      </>
+    );
   }
 
-  const isSuccess = status === "success";
-  const isPending = !status && code;
-  const isFailed = status === "failed";
-  const isCancelled = status === "cancelled";
+  const isSuccess = snapshot.status === "PAID";
+  const isPending = snapshot.status === "PENDING";
+  const isFailed = snapshot.status === "FAILED";
+  const isCancelled = snapshot.status === "CANCELLED";
 
   return (
     <>
@@ -226,7 +227,7 @@ export default async function OrderConfirmationPage({
                 ) : null}
 
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-                  <Link href={`/thanh-toan-gateway?paymentId=pending&orderCode=${code}&amount=${totalAmount}`} className="inline-flex min-h-12 items-center justify-center rounded-full bg-electric px-6 text-sm font-bold text-white hover:bg-blue-700">
+                  <Link href={`/thanh-toan-gateway?paymentId=${snapshot.paymentId}&orderCode=${code}&amount=${totalAmount}`} className="inline-flex min-h-12 items-center justify-center rounded-full bg-electric px-6 text-sm font-bold text-white hover:bg-blue-700">
                     Thanh toán ngay
                   </Link>
                   <Link href="/" className="inline-flex min-h-12 items-center justify-center rounded-full border border-slate-200 px-6 text-sm font-bold text-slate-600 hover:border-electric hover:text-electric">

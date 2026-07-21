@@ -28,7 +28,9 @@ import {
   validateCartForCheckout,
   validateCheckoutForm,
 } from "@/features/checkout/checkout.service";
-import { validateCoupon } from "@/features/payment/coupon.service";
+import { redeemCoupon, validateCoupon } from "@/features/payment/coupon.service";
+import { createPaymentSession } from "@/features/payment/payment.service";
+import { createOrder } from "@/features/order/order.service";
 import type { CheckoutFormState } from "@/features/cart/cart.types";
 
 async function getCartFromCookie(): Promise<Cart> {
@@ -148,7 +150,7 @@ export async function placeOrderAction(
   let discountTotal = 0;
   const shippingTotal = 0;
   if (form.couponCode) {
-    const couponResult = validateCoupon(form.couponCode, verifiedSubtotal, shippingTotal);
+    const couponResult = validateCoupon(form.couponCode, verifiedSubtotal, shippingTotal, form.phone);
     if (!couponResult.valid) {
       return { success: false, error: couponResult.error };
     }
@@ -163,10 +165,14 @@ export async function placeOrderAction(
   const orderCode = generateOrderCode();
   const trackingToken = generateTrackingToken();
   const addressSnapshot = createAddressSnapshot(form.address);
+  const { paymentId } = createPaymentSession(orderCode, totals.grandTotal);
 
-  const orderSnapshot = {
+  createOrder({
     code: orderCode,
     trackingToken,
+    paymentId,
+    email: form.email,
+    phone: form.phone,
     items: verifiedItems.map((item) => ({
       productName: item.productName,
       variantName: item.variantName,
@@ -175,22 +181,18 @@ export async function placeOrderAction(
     })),
     couponCode: form.couponCode || undefined,
     address: addressSnapshot,
-    email: form.email,
-    phone: form.phone,
     subtotal: totals.subtotal,
     shippingTotal: totals.shippingTotal,
     discountTotal: totals.discountTotal,
     grandTotal: totals.grandTotal,
-  };
+  });
+
+  if (form.couponCode && discountTotal > 0) {
+    redeemCoupon(form.couponCode, form.phone);
+  }
 
   const cookieStore = await cookies();
-  cookieStore.set("nexora_order_snapshot", JSON.stringify(orderSnapshot), {
-    httpOnly: true,
-    sameSite: "lax",
-    maxAge: 600,
-    path: "/",
-  });
   cookieStore.delete(CART_COOKIE_NAME);
 
-  redirect(`/don-hang/${orderCode}?token=${trackingToken}&total=${totals.grandTotal}`);
+  redirect(`/don-hang/${orderCode}?token=${trackingToken}`);
 }

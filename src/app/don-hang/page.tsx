@@ -1,29 +1,16 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { Search } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { formatVnd } from "@/features/catalog/catalog.service";
+import { getOrderByCodeAndPhone } from "@/features/order/order.service";
+import type { OrderRecord } from "@/features/order/order.types";
 
 export const metadata: Metadata = {
   title: "Theo dõi đơn hàng",
   description: "Tra cứu đơn hàng Nexora của bạn.",
-};
-
-type OrderSnapshot = {
-  code: string;
-  trackingToken: string;
-  items: Array<{ productName: string; variantName: string; quantity: number; lineTotal: number }>;
-  address: { name: string; phone: string; province: string; district: string; ward: string; line1: string };
-  email: string;
-  phone: string;
-  couponCode?: string;
-  subtotal: number;
-  shippingTotal: number;
-  discountTotal: number;
-  grandTotal: number;
 };
 
 type SearchParams = Promise<{
@@ -36,25 +23,15 @@ export default async function OrderTrackingPage({ searchParams }: Readonly<{ sea
   const queryCode = params.code?.trim() ?? "";
   const queryPhone = params.phone?.trim() ?? "";
 
-  let snapshot: OrderSnapshot | null = null;
+  let snapshot: OrderRecord | null = null;
   let phoneMismatch = false;
 
-  if (queryCode) {
-    const cookieStore = await cookies();
-    const snapshotRaw = cookieStore.get("nexora_order_snapshot")?.value;
-    if (snapshotRaw) {
-      try {
-        const parsed = JSON.parse(snapshotRaw) as OrderSnapshot;
-        if (parsed.code === queryCode) {
-          if (queryPhone && parsed.phone !== queryPhone) {
-            phoneMismatch = true;
-          } else {
-            snapshot = parsed;
-          }
-        }
-      } catch {
-        snapshot = null;
-      }
+  if (queryCode && queryPhone) {
+    const order = getOrderByCodeAndPhone(queryCode, queryPhone);
+    if (order) {
+      snapshot = order;
+    } else {
+      phoneMismatch = true;
     }
   }
 

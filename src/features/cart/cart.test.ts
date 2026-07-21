@@ -92,9 +92,11 @@ describe("cart service", () => {
 
   it("creates a cart item from repository", async () => {
     const repository = new InMemoryCatalogRepository();
-    const item = await createCartItem(repository, "macbook-air-m4-13", "MBA-M4-13-16-256-SLV", 2);
+    const detail = await repository.getProductBySlug("macbook-air-m4-13");
+    const firstSku = detail!.variants[0].sku;
+    const item = await createCartItem(repository, "macbook-air-m4-13", firstSku, 2);
     expect(item.productName).toBe("MacBook Air M4 13\"");
-    expect(item.sku).toBe("MBA-M4-13-16-256-SLV");
+    expect(item.sku).toBe(firstSku);
     expect(item.quantity).toBe(2);
     expect(item.lineTotal).toBe(item.unitPrice * 2);
   });
