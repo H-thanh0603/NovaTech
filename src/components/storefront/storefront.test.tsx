@@ -1,6 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
+import { WishlistProvider } from "@/features/wishlist/wishlist-context";
 import { SiteFooter } from "../layout/site-footer";
 import { Hero } from "./hero";
 import { HomeSections } from "./home-sections";
@@ -31,7 +32,7 @@ describe("storefront content", () => {
 
   it("presents the decision details and accessible product image", () => {
     const markup = renderToStaticMarkup(
-      <ProductCard
+      <WishlistProvider><ProductCard
         product={{
           id: "laptop-one",
           slug: "laptop-one",
@@ -44,7 +45,7 @@ describe("storefront content", () => {
           specs: ["RAM 16 GB", "Pin 18 giờ"],
           featured: true,
         }}
-      />,
+      /></WishlistProvider>,
     );
 
     expect(markup).toContain('alt="Laptop bạc mở trên bàn"');

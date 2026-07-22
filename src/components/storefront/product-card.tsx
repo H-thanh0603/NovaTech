@@ -1,9 +1,12 @@
+"use client";
+
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { formatVnd } from "@/features/catalog/catalog.service";
 import type { CatalogProduct } from "@/features/catalog/catalog.types";
+import { WishlistButton } from "@/components/catalog/wishlist-button";
 
 type ProductCardProps = Readonly<{
   product: CatalogProduct;
@@ -36,6 +39,9 @@ export function ProductCard({ product }: ProductCardProps) {
               -{discountPercent}%
             </span>
           ) : null}
+        </div>
+        <div className="absolute right-3 top-3">
+          <WishlistButton slug={product.slug} />
         </div>
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">

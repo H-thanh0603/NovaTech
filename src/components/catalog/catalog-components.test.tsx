@@ -5,6 +5,7 @@ import { ProductDetail } from "@/components/catalog/product-detail";
 import { FilterBar } from "@/components/catalog/filter-bar";
 import { ProductList } from "@/components/catalog/product-list";
 import { ReviewList } from "@/components/catalog/review-list";
+import { WishlistProvider } from "@/features/wishlist/wishlist-context";
 import type { CatalogProductDetail, CatalogReview } from "@/features/catalog/catalog.types";
 
 const mockProduct: CatalogProductDetail = {
@@ -40,25 +41,25 @@ const mockProduct: CatalogProductDetail = {
 
 describe("product detail component", () => {
   it("renders verdict and considerations", () => {
-    const markup = renderToStaticMarkup(<ProductDetail product={mockProduct} />);
+    const markup = renderToStaticMarkup(<WishlistProvider><ProductDetail product={mockProduct} /></WishlistProvider>);
     expect(markup).toContain("Laptop tốt nhất cho công việc.");
     expect(markup).toContain("Nặng 1.8kg");
   });
 
   it("renders highlights", () => {
-    const markup = renderToStaticMarkup(<ProductDetail product={mockProduct} />);
+    const markup = renderToStaticMarkup(<WishlistProvider><ProductDetail product={mockProduct} /></WishlistProvider>);
     expect(markup).toContain("Pin 20 giờ");
     expect(markup).toContain("Màn hình 2K");
   });
 
   it("renders variant names", () => {
-    const markup = renderToStaticMarkup(<ProductDetail product={mockProduct} />);
+    const markup = renderToStaticMarkup(<WishlistProvider><ProductDetail product={mockProduct} /></WishlistProvider>);
     expect(markup).toContain("16GB RAM");
     expect(markup).toContain("32GB RAM");
   });
 
   it("renders product name in breadcrumb", () => {
-    const markup = renderToStaticMarkup(<ProductDetail product={mockProduct} />);
+    const markup = renderToStaticMarkup(<WishlistProvider><ProductDetail product={mockProduct} /></WishlistProvider>);
     expect(markup).toContain("Test Laptop Pro");
   });
 });
@@ -82,7 +83,7 @@ describe("filter bar component", () => {
 describe("product list component", () => {
   it("renders product names", () => {
     const markup = renderToStaticMarkup(
-      <ProductList
+      <WishlistProvider><ProductList
         result={{
           items: Object.freeze([
             { id: "p1", slug: "p1", name: "Product 1", category: "Laptop", price: 10_000_000, imageUrl: "", imageAlt: "P1", verdict: "Tốt", specs: Object.freeze([]), featured: true },
@@ -93,7 +94,7 @@ describe("product list component", () => {
           totalPages: 1,
         }}
         basePath="/san-pham"
-      />,
+      /></WishlistProvider>,
     );
     expect(markup).toContain("Product 1");
   });

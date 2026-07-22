@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown, Minus, ShoppingBag } from "lucide-react";
+import { Check, ChevronDown, Heart, Minus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useActionState, useState } from "react";
@@ -12,6 +12,7 @@ import { VariantSelector } from "@/components/catalog/variant-selector";
 import { addToCartAction } from "@/features/checkout/checkout.actions";
 import { formatVnd } from "@/features/catalog/catalog.service";
 import type { CatalogProduct, CatalogProductDetail } from "@/features/catalog/catalog.types";
+import { useWishlist } from "@/features/wishlist/wishlist-context";
 
 type ProductDetailProps = Readonly<{
   product: CatalogProductDetail;
@@ -174,17 +175,20 @@ export function ProductDetail({ product, relatedProducts = [] }: ProductDetailPr
             <input type="hidden" name="slug" value={product.slug} />
             <input type="hidden" name="sku" value={selectedSku} />
             <input type="hidden" name="quantity" value="1" />
-            <button
-              type="submit"
-              disabled={added}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-electric px-6 text-sm font-bold text-white transition-colors hover:bg-blue-700 disabled:bg-teal-tech"
-            >
-              {added ? (
-                <><Check className="size-4" aria-hidden="true" /> Đã thêm vào giỏ</>
-              ) : (
-                <><ShoppingBag className="size-4" aria-hidden="true" /> Thêm vào giỏ hàng</>
-              )}
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                type="submit"
+                disabled={added}
+                className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-electric px-6 text-sm font-bold text-white transition-colors hover:bg-blue-700 disabled:bg-teal-tech"
+              >
+                {added ? (
+                  <><Check className="size-4" aria-hidden="true" /> Đã thêm vào giỏ</>
+                ) : (
+                  <><ShoppingBag className="size-4" aria-hidden="true" /> Thêm vào giỏ hàng</>
+                )}
+              </button>
+              <WishlistToggleButton slug={product.slug} />
+            </div>
           </form>
           {cartState?.error ? <p className="text-sm text-red-500">{cartState.error}</p> : null}
 
@@ -262,5 +266,26 @@ export function ProductDetail({ product, relatedProducts = [] }: ProductDetailPr
         imageAlt={activeMedia?.alt ?? product.name}
       />
     </div>
+  );
+}
+
+function WishlistToggleButton({ slug }: Readonly<{ slug: string }>) {
+  const { has, toggle } = useWishlist();
+  const active = has(slug);
+
+  return (
+    <button
+      type="button"
+      onClick={() => toggle(slug)}
+      className={`grid size-12 shrink-0 place-items-center rounded-full border transition-colors ${
+        active
+          ? "border-red-300 bg-red-50 text-red-500"
+          : "border-slate-200 text-slate-400 hover:border-red-300 hover:text-red-500"
+      }`}
+      aria-label={active ? "Bỏ yêu thích" : "Thêm yêu thích"}
+      aria-pressed={active}
+    >
+      <Heart className={`size-5 ${active ? "fill-current" : ""}`} aria-hidden="true" />
+    </button>
   );
 }

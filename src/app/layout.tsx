@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 
+import { WishlistProvider } from "@/features/wishlist/wishlist-context";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -34,7 +35,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="vi" className={`${manrope.variable} ${spaceGrotesk.variable}`}>
-      <body>{children}</body>
+      <body>
+        <WishlistProvider>{children}</WishlistProvider>
+      </body>
     </html>
   );
 }
