@@ -7,6 +7,7 @@ import { useActionState, useState } from "react";
 
 import { ProductCard } from "@/components/storefront/product-card";
 import { ReviewList } from "@/components/catalog/review-list";
+import { SpecComparison } from "@/components/catalog/spec-comparison";
 import { StickyAddToCart } from "@/components/catalog/sticky-add-to-cart";
 import { VariantSelector } from "@/components/catalog/variant-selector";
 import { addToCartAction } from "@/features/checkout/checkout.actions";
@@ -247,6 +248,10 @@ export function ProductDetail({ product, relatedProducts = [] }: ProductDetailPr
           <FaqAccordion />
         </div>
       </section>
+
+      {relatedProducts.length > 0 ? (
+        <SpecComparison product={product} relatedProducts={relatedProducts} />
+      ) : null}
 
       {relatedProducts.length > 0 ? (
         <section aria-labelledby="related-title" className="mt-16">
