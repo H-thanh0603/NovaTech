@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AlertTriangle, CheckCircle, XCircle, Package } from "lucide-react";
+import { AlertTriangle, CheckCircle, Clock, Package, PackageCheck, Truck, XCircle } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -96,6 +96,12 @@ export default async function OrderConfirmationPage({
                       <span className="font-mono text-sm font-semibold text-slate-600">{token}</span>
                     </div>
                   ) : null}
+                  {snapshot.paymentMethod ? (
+                    <div className="mt-4 flex items-center justify-between">
+                      <span className="text-sm text-slate-500">Thanh toán qua</span>
+                      <span className="text-sm font-semibold text-midnight">{snapshot.paymentMethod.toUpperCase()}</span>
+                    </div>
+                  ) : null}
                 </div>
 
                 {snapshot ? (
@@ -157,6 +163,36 @@ export default async function OrderConfirmationPage({
                         </dd>
                       </div>
                     </dl>
+                  </div>
+                ) : null}
+
+                {isSuccess ? (
+                  <div className="mt-6 rounded-panel border border-slate-200 bg-white p-6 text-left">
+                    <h2 className="font-display text-lg font-bold text-midnight">Trạng thái đơn hàng</h2>
+                    <div className="mt-5 flex flex-col gap-0">
+                      {[
+                        { icon: CheckCircle, label: "Đặt hàng thành công", desc: "Đơn hàng đã được tiếp nhận", done: true },
+                        { icon: PackageCheck, label: "Đã xác nhận", desc: "Nexora đã xác nhận thông tin", done: true },
+                        { icon: Truck, label: "Đang giao hàng", desc: "Đơn hàng đang trên đường đến bạn", done: false },
+                        { icon: Clock, label: "Giao hàng dự kiến", desc: "Trong 1-2 ngày làm việc", done: false },
+                      ].map((step, index) => {
+                        const Icon = step.icon;
+                        return (
+                          <div key={step.label} className="flex gap-4">
+                            <div className="flex flex-col items-center">
+                              <span className={`grid size-10 shrink-0 place-items-center rounded-full ${step.done ? "bg-teal-50 text-teal-tech" : "bg-slate-100 text-slate-400"}`}>
+                                <Icon className="size-5" aria-hidden="true" />
+                              </span>
+                              {index < 3 ? <div className={`w-0.5 flex-1 ${step.done ? "bg-teal-200" : "bg-slate-200"}`} style={{ minHeight: "24px" }} /> : null}
+                            </div>
+                            <div className="pb-6">
+                              <p className={`text-sm font-bold ${step.done ? "text-midnight" : "text-slate-400"}`}>{step.label}</p>
+                              <p className="mt-0.5 text-xs text-slate-500">{step.desc}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 ) : null}
 

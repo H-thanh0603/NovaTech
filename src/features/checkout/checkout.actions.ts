@@ -121,6 +121,7 @@ export async function placeOrderAction(
     },
     note: String(formData.get("note") ?? "") || undefined,
     couponCode: String(formData.get("couponCode") ?? "") || undefined,
+    paymentMethod: String(formData.get("paymentMethod") ?? "") || undefined,
   };
 
   const formErrors = validateCheckoutForm(form);
@@ -180,6 +181,7 @@ export async function placeOrderAction(
       lineTotal: item.lineTotal,
     })),
     couponCode: form.couponCode || undefined,
+    paymentMethod: form.paymentMethod || undefined,
     address: addressSnapshot,
     subtotal: totals.subtotal,
     shippingTotal: totals.shippingTotal,

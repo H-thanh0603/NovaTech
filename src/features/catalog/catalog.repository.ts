@@ -41,6 +41,14 @@ function sortProducts(
       return sorted.sort((a, b) => b.price - a.price);
     case "name-asc":
       return sorted.sort((a, b) => a.name.localeCompare(b.name, "vi"));
+    case "newest":
+      return sorted.sort((a, b) => {
+        const aDate = a.releaseDate ? new Date(a.releaseDate).getTime() : 0;
+        const bDate = b.releaseDate ? new Date(b.releaseDate).getTime() : 0;
+        return bDate - aDate;
+      });
+    case "best-selling":
+      return sorted.sort((a, b) => (b.soldCount ?? 0) - (a.soldCount ?? 0));
     case "featured":
     default:
       return sorted.sort((a, b) => {
@@ -93,6 +101,29 @@ export class InMemoryCatalogRepository implements CatalogRepository {
           .map((d) => d.slug),
       );
       filtered = filtered.filter((p) => detailSlugs.has(p.slug));
+    }
+
+    if (filters?.search) {
+      const query = filters.search.toLowerCase().trim();
+      filtered = filtered.filter(
+        (p) =>
+          p.name.toLowerCase().includes(query) ||
+          p.category.toLowerCase().includes(query) ||
+          p.specs.some((s) => s.toLowerCase().includes(query)),
+      );
+    }
+
+    if (filters?.minPrice != null) {
+      filtered = filtered.filter((p) => p.price >= filters.minPrice!);
+    }
+
+    if (filters?.maxPrice != null) {
+      filtered = filtered.filter((p) => p.price <= filters.maxPrice!);
+    }
+
+    if (filters?.tags && filters.tags.length > 0) {
+      const tagSet = new Set(filters.tags);
+      filtered = filtered.filter((p) => p.tags?.some((t) => tagSet.has(t)));
     }
 
     const sorted = sortProducts(filtered, sort);

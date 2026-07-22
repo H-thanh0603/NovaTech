@@ -33,6 +33,7 @@ export type CheckoutFormState = Readonly<{
   address: CheckoutAddress;
   note?: string;
   couponCode?: string;
+  paymentMethod?: string;
 }>;
 
 export type OrderResult = Readonly<{

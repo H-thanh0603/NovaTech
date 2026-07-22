@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Link from "next/link";
 
+import { AddressBook } from "@/components/account/address-book";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { getUserFromSession, SESSION_COOKIE_NAME } from "@/features/auth/auth.service";
@@ -29,15 +30,8 @@ export default async function AddressPage() {
             <span className="font-semibold text-slate-700">Sổ địa chỉ</span>
           </div>
           <h1 className="mt-4 font-display text-3xl font-semibold tracking-[-0.04em] text-midnight sm:text-4xl">Sổ địa chỉ</h1>
-
-          <div className="mt-8 rounded-panel border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
-            <h2 className="font-display text-xl font-semibold text-midnight">Chưa có địa chỉ nào</h2>
-            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
-              Thêm địa chỉ giao hàng để thanh toán nhanh hơn.
-            </p>
-            <button type="button" disabled className="mt-6 inline-flex min-h-11 items-center rounded-full bg-slate-200 px-6 text-sm font-bold text-slate-400 disabled:cursor-not-allowed">
-              Thêm địa chỉ — sắp ra mắt
-            </button>
+          <div className="mt-8">
+            <AddressBook />
           </div>
         </div>
       </main>

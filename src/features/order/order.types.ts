@@ -26,12 +26,13 @@ export type OrderRecord = Readonly<{
   items: readonly OrderItemSnapshot[];
   address: OrderAddressSnapshot;
   couponCode?: string;
+  paymentMethod?: string;
   subtotal: number;
   shippingTotal: number;
   discountTotal: number;
   grandTotal: number;
   createdAt: number;
-}>;
+}>
 
 export type CreateOrderInput = Readonly<{
   code: string;
@@ -42,8 +43,9 @@ export type CreateOrderInput = Readonly<{
   items: readonly OrderItemSnapshot[];
   address: OrderAddressSnapshot;
   couponCode?: string;
+  paymentMethod?: string;
   subtotal: number;
   shippingTotal: number;
   discountTotal: number;
   grandTotal: number;
-}>;
+}>

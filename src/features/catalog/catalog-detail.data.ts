@@ -2717,8 +2717,8 @@ export const catalogProductDetails: readonly CatalogProductDetail[] = [
     "featured": false
   },
   {
-    "id": "samsung-galaxy-s25",
-    "slug": "samsung-galaxy-s25",
+    "id": "samsung-galaxy-s25-plus",
+    "slug": "samsung-galaxy-s25-plus",
     "name": "Samsung Galaxy S25+",
     "category": "Điện thoại",
     "categorySlug": "dien-thoai",
@@ -2746,15 +2746,15 @@ export const catalogProductDetails: readonly CatalogProductDetail[] = [
     ],
     "media": [
       {
-        "id": "samsung-galaxy-s25-media-1",
-        "url": "https://picsum.photos/seed/samsung-galaxy-s25-a/1200/1200",
+        "id": "samsung-galaxy-s25-plus-media-1",
+        "url": "https://picsum.photos/seed/samsung-galaxy-s25-plus-a/1200/1200",
         "alt": "Samsung Galaxy S25+",
         "type": "IMAGE",
         "sortOrder": 0
       },
       {
-        "id": "samsung-galaxy-s25-media-2",
-        "url": "https://picsum.photos/seed/samsung-galaxy-s25-b/1200/1200",
+        "id": "samsung-galaxy-s25-plus-media-2",
+        "url": "https://picsum.photos/seed/samsung-galaxy-s25-plus-b/1200/1200",
         "alt": "Samsung Galaxy S25+ — góc nhìn khác",
         "type": "IMAGE",
         "sortOrder": 1
@@ -2762,8 +2762,8 @@ export const catalogProductDetails: readonly CatalogProductDetail[] = [
     ],
     "variants": [
       {
-        "id": "v-samsung-galaxy-s25-0",
-        "sku": "SAMSUNG-GALAXY-S25-128GB-ĐEN",
+        "id": "v-samsung-galaxy-s25-plus-0",
+        "sku": "SAMSUNG-GALAXY-S25-PLUS-128GB-ĐEN",
         "name": "128 GB / Đen",
         "attributes": {
           "storage": "128 GB",
@@ -2775,8 +2775,8 @@ export const catalogProductDetails: readonly CatalogProductDetail[] = [
         "lowStockAt": 5
       },
       {
-        "id": "v-samsung-galaxy-s25-1",
-        "sku": "SAMSUNG-GALAXY-S25-256GB-BẠC",
+        "id": "v-samsung-galaxy-s25-plus-1",
+        "sku": "SAMSUNG-GALAXY-S25-PLUS-256GB-BẠC",
         "name": "256 GB / Bạc",
         "attributes": {
           "storage": "256 GB",
@@ -2787,8 +2787,8 @@ export const catalogProductDetails: readonly CatalogProductDetail[] = [
         "lowStockAt": 5
       },
       {
-        "id": "v-samsung-galaxy-s25-2",
-        "sku": "SAMSUNG-GALAXY-S25-512GB-XAN",
+        "id": "v-samsung-galaxy-s25-plus-2",
+        "sku": "SAMSUNG-GALAXY-S25-PLUS-512GB-XAN",
         "name": "512 GB / Xanh",
         "attributes": {
           "storage": "512 GB",
@@ -2801,7 +2801,7 @@ export const catalogProductDetails: readonly CatalogProductDetail[] = [
     ],
     "reviews": [
       {
-        "id": "r-samsung-galaxy-s25-1",
+        "id": "r-samsung-galaxy-s25-plus-1",
         "authorName": "Bảo Trân",
         "rating": 5,
         "title": "Đáng mua",
@@ -2810,7 +2810,7 @@ export const catalogProductDetails: readonly CatalogProductDetail[] = [
         "createdAt": "2026-06-15T08:00:00Z"
       },
       {
-        "id": "r-samsung-galaxy-s25-2",
+        "id": "r-samsung-galaxy-s25-plus-2",
         "authorName": "Trí Tuấn",
         "rating": 4,
         "title": "Hài lòng",

@@ -10,6 +10,11 @@ type ProductCardProps = Readonly<{
 }>;
 
 export function ProductCard({ product }: ProductCardProps) {
+  const hasDiscount = product.compareAtPrice && product.compareAtPrice > product.price;
+  const discountPercent = hasDiscount
+    ? Math.round((1 - product.price / product.compareAtPrice!) * 100)
+    : 0;
+
   return (
     <Link href={`/san-pham/${product.slug}`} className="group flex h-full flex-col overflow-hidden rounded-card border border-slate-200 bg-white transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/70">
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
@@ -20,11 +25,18 @@ export function ProductCard({ product }: ProductCardProps) {
           sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
           className="object-cover transition-transform duration-500 group-hover:scale-[1.035]"
         />
-        {product.badge ? (
-          <span className="absolute left-4 top-4 rounded-full bg-midnight px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white">
-            {product.badge}
-          </span>
-        ) : null}
+        <div className="absolute left-4 top-4 flex flex-col gap-2">
+          {product.badge ? (
+            <span className="rounded-full bg-midnight px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white">
+              {product.badge}
+            </span>
+          ) : null}
+          {hasDiscount ? (
+            <span className="rounded-full bg-red-500 px-3 py-1.5 text-[11px] font-bold text-white">
+              -{discountPercent}%
+            </span>
+          ) : null}
+        </div>
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <p className="text-xs font-bold uppercase tracking-[0.14em] text-electric">{product.category}</p>
@@ -38,7 +50,13 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="mt-auto flex items-end justify-between gap-4 pt-6">
           <div>
             <p className="font-display text-xl font-bold tracking-[-0.03em] text-midnight">{formatVnd(product.price)}</p>
-            {product.compareAtPrice ? <p className="mt-1 text-xs text-slate-400 line-through">{formatVnd(product.compareAtPrice)}</p> : null}
+            {hasDiscount ? (
+              <div className="mt-1 flex items-center gap-2">
+                <p className="text-xs text-slate-400 line-through">{formatVnd(product.compareAtPrice!)}</p>
+                <span className="rounded bg-red-50 px-1.5 py-0.5 text-[10px] font-bold text-red-600">-{discountPercent}%</span>
+              </div>
+            ) : null}
+            <p className="mt-1.5 text-[11px] font-semibold text-teal-tech">Trả góp 0%</p>
           </div>
           <span className="grid size-11 place-items-center rounded-full border border-slate-200 text-slate-500 transition-colors group-hover:border-electric group-hover:bg-electric group-hover:text-white" aria-hidden="true">
             <ArrowUpRight className="size-4" />

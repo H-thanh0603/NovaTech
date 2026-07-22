@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import { KeyRound, MapPin, Package, UserRound } from "lucide-react";
 
 import { AccountNav } from "@/components/auth/account-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -13,9 +14,9 @@ export const metadata: Metadata = {
 };
 
 const accountLinks = [
-  { label: "Thông tin tài khoản", href: "/tai-khoan", active: true },
-  { label: "Sổ địa chỉ", href: "/tai-khoan/dia-chi", active: false },
-  { label: "Lịch sử đơn hàng", href: "/tai-khoan/don-hang", active: false },
+  { label: "Thông tin tài khoản", href: "/tai-khoan", active: true, icon: UserRound },
+  { label: "Sổ địa chỉ", href: "/tai-khoan/dia-chi", active: false, icon: MapPin },
+  { label: "Lịch sử đơn hàng", href: "/tai-khoan/don-hang", active: false, icon: Package },
 ] as const;
 
 export default async function AccountPage() {
@@ -35,19 +36,28 @@ export default async function AccountPage() {
           <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-start">
             <aside className="w-full shrink-0 lg:w-64">
               <nav aria-label="Tài khoản" className="flex flex-col gap-1">
-                {accountLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`flex min-h-11 items-center rounded-xl px-4 text-sm font-semibold transition-colors ${
-                      link.active
-                        ? "bg-electric text-white"
-                        : "text-slate-600 hover:bg-white hover:text-electric"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                {accountLinks.map((link) => {
+                  const Icon = link.icon;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`flex min-h-11 items-center gap-2.5 rounded-xl px-4 text-sm font-semibold transition-colors ${
+                        link.active
+                          ? "bg-electric text-white"
+                          : "text-slate-600 hover:bg-white hover:text-electric"
+                      }`}
+                    >
+                      <Icon className="size-4" aria-hidden="true" />
+                      {link.label}
+                    </Link>
+                  );
+                })}
+                <div className="my-2 border-t border-slate-200" />
+                <div className="flex min-h-11 items-center gap-2.5 rounded-xl px-4 text-sm font-semibold text-slate-400">
+                  <KeyRound className="size-4" aria-hidden="true" />
+                  Đổi mật khẩu
+                </div>
               </nav>
             </aside>
 
@@ -69,6 +79,44 @@ export default async function AccountPage() {
                     <dd className="text-sm font-semibold text-midnight">{user.role === "ADMIN" ? "Quản trị viên" : "Khách hàng"}</dd>
                   </div>
                 </dl>
+              </div>
+
+              <div className="rounded-panel border border-slate-200 bg-white p-5 sm:p-6">
+                <h2 className="font-display text-lg font-bold text-midnight">Cập nhật thông tin</h2>
+                <div className="mt-4 flex flex-col gap-4">
+                  <div>
+                    <label htmlFor="edit-name" className="text-sm font-semibold text-slate-600">Họ tên</label>
+                    <input id="edit-name" type="text" defaultValue={user.name} className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-700 focus:border-electric focus:outline-none" />
+                  </div>
+                  <div>
+                    <label htmlFor="edit-phone" className="text-sm font-semibold text-slate-600">Số điện thoại</label>
+                    <input id="edit-phone" type="tel" placeholder="09xx xxx xxx" className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-700 focus:border-electric focus:outline-none" />
+                  </div>
+                  <button type="button" className="inline-flex min-h-11 items-center justify-center rounded-full bg-electric px-6 text-sm font-bold text-white hover:bg-blue-700 sm:w-auto">
+                    Lưu thay đổi
+                  </button>
+                </div>
+              </div>
+
+              <div className="rounded-panel border border-slate-200 bg-white p-5 sm:p-6">
+                <h2 className="font-display text-lg font-bold text-midnight">Đổi mật khẩu</h2>
+                <div className="mt-4 flex flex-col gap-4">
+                  <div>
+                    <label htmlFor="current-pw" className="text-sm font-semibold text-slate-600">Mật khẩu hiện tại</label>
+                    <input id="current-pw" type="password" className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-700 focus:border-electric focus:outline-none" />
+                  </div>
+                  <div>
+                    <label htmlFor="new-pw" className="text-sm font-semibold text-slate-600">Mật khẩu mới</label>
+                    <input id="new-pw" type="password" className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-700 focus:border-electric focus:outline-none" />
+                  </div>
+                  <div>
+                    <label htmlFor="confirm-pw" className="text-sm font-semibold text-slate-600">Xác nhận mật khẩu mới</label>
+                    <input id="confirm-pw" type="password" className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 px-4 text-sm text-slate-700 focus:border-electric focus:outline-none" />
+                  </div>
+                  <button type="button" className="inline-flex min-h-11 items-center justify-center rounded-full border border-slate-200 px-6 text-sm font-bold text-slate-600 hover:border-electric hover:text-electric sm:w-auto">
+                    Cập nhật mật khẩu
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Mail, Youtube } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand/brand-mark";
@@ -9,26 +9,29 @@ const footerGroups = [
     links: [
       { label: "Laptop", href: "/san-pham?category=laptop" },
       { label: "Điện thoại", href: "/san-pham?category=dien-thoai" },
-      { label: "Phụ kiện", href: "/san-pham?category=phu-kien" },
+      { label: "Đồng hồ thông minh", href: "/san-pham?category=dong-ho-thong-minh" },
+      { label: "Âm thanh", href: "/san-pham?category=am-thanh" },
       { label: "Tất cả sản phẩm", href: "/san-pham" },
+      { label: "Khuyến mãi", href: "/khuyen-mai" },
     ],
   },
   {
     title: "Hỗ trợ",
     links: [
-      { label: "Liên hệ", href: null },
-      { label: "Theo dõi đơn", href: "/don-hang" },
-      { label: "Bảo hành", href: null },
-      { label: "Đổi trả", href: null },
+      { label: "Theo dõi đơn hàng", href: "/don-hang" },
+      { label: "Bảo hành & Sửa chữa", href: null },
+      { label: "Chính sách đổi trả", href: null },
+      { label: "Hướng dẫn trả góp", href: null },
+      { label: "Câu hỏi thường gặp", href: null },
     ],
   },
   {
     title: "Về Nexora",
     links: [
       { label: "Cách chúng tôi chọn", href: null },
-      { label: "Cẩm nang", href: null },
-      { label: "Điều khoản", href: null },
-      { label: "Quyền riêng tư", href: null },
+      { label: "Cẩm nang công nghệ", href: "/cam-nang" },
+      { label: "Điều khoản sử dụng", href: null },
+      { label: "Chính sách riêng tư", href: null },
     ],
   },
 ] as const;
@@ -41,9 +44,17 @@ export function SiteFooter() {
           <div className="max-w-sm">
             <BrandMark inverse />
             <p className="mt-5 text-sm leading-7 text-slate-400">Công nghệ được tuyển chọn, giải thích rõ ràng và đặt trong đúng bối cảnh sử dụng của bạn.</p>
-            <a href="mailto:hello@nexora.vn" className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-white hover:text-mint">
-              <Mail className="size-4" aria-hidden="true" /> hello@nexora.vn
-            </a>
+            <div className="mt-5 flex flex-col gap-3">
+              <a href="mailto:hello@nexora.vn" className="inline-flex min-h-11 items-center gap-2 text-sm font-bold text-white hover:text-mint">
+                <Mail className="size-4" aria-hidden="true" /> hello@nexora.vn
+              </a>
+              <a href="tel:18002097" className="inline-flex min-h-11 items-center gap-2 text-sm font-bold text-white hover:text-mint">
+                <Phone className="size-4" aria-hidden="true" /> Hotline: 1800 2097
+              </a>
+              <p className="inline-flex min-h-11 items-center gap-2 text-sm text-slate-400">
+                <MapPin className="size-4" aria-hidden="true" /> 209 Lê Duẩn, Hai Bà Trưng, Hà Nội
+              </p>
+            </div>
           </div>
           <div className="grid gap-8 sm:grid-cols-3">
             {footerGroups.map((group) => (

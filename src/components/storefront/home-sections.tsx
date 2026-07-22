@@ -54,9 +54,47 @@ const trustItems = [
 
 type HomeSectionsProps = Readonly<{
   products: readonly CatalogProduct[];
+  phones?: readonly CatalogProduct[];
+  laptops?: readonly CatalogProduct[];
+  audio?: readonly CatalogProduct[];
 }>;
 
-export function HomeSections({ products }: HomeSectionsProps) {
+function CategorySection({
+  id,
+  title,
+  eyebrow,
+  products,
+  categoryHref,
+}: Readonly<{
+  id: string;
+  title: string;
+  eyebrow: string;
+  products: readonly CatalogProduct[];
+  categoryHref: string;
+}>) {
+  if (products.length === 0) return null;
+
+  return (
+    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-28 bg-surface py-14 sm:py-18">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-electric">{eyebrow}</p>
+            <h2 id={`${id}-title`} className="mt-2 font-display text-2xl font-semibold tracking-[-0.04em] text-midnight sm:text-3xl">{title}</h2>
+          </div>
+          <Link href={categoryHref} className="inline-flex min-h-10 items-center gap-1.5 text-sm font-bold text-electric hover:gap-2.5 transition-all">
+            Xem tất cả <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        </div>
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {products.map((product) => <ProductCard key={product.id} product={product} />)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function HomeSections({ products, phones, laptops, audio }: HomeSectionsProps) {
   return (
     <>
       <section aria-labelledby="quick-finder-title" className="border-b border-slate-200 bg-white">
@@ -97,6 +135,14 @@ export function HomeSections({ products }: HomeSectionsProps) {
         </div>
       </section>
 
+      <CategorySection
+        id="phones"
+        title="Điện thoại bán chạy"
+        eyebrow="Điện thoại · Hot nhất"
+        products={phones ?? []}
+        categoryHref="/san-pham?category=dien-thoai"
+      />
+
       <section id="setup" aria-labelledby="setup-title" className="scroll-mt-28 bg-white py-18 sm:py-24">
         <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-8">
           <div className="relative isolate overflow-hidden rounded-[2rem] bg-midnight px-6 py-12 text-white sm:px-10 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-12 lg:px-14 lg:py-16">
@@ -127,6 +173,14 @@ export function HomeSections({ products }: HomeSectionsProps) {
         </div>
       </section>
 
+      <CategorySection
+        id="laptops"
+        title="Laptop đáng mua"
+        eyebrow="Laptop · Tuyển chọn"
+        products={laptops ?? []}
+        categoryHref="/san-pham?category=laptop"
+      />
+
       <section id="picks" aria-labelledby="picks-title" className="scroll-mt-28 bg-slate-100 py-18 sm:py-24">
         <div className="mx-auto grid max-w-page gap-12 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:px-8">
           <div>
@@ -150,6 +204,14 @@ export function HomeSections({ products }: HomeSectionsProps) {
           </div>
         </div>
       </section>
+
+      <CategorySection
+        id="audio"
+        title="Âm thanh được yêu thích"
+        eyebrow="Âm thanh · Chọn nhiều"
+        products={audio ?? []}
+        categoryHref="/san-pham?category=am-thanh"
+      />
 
       <section id="guides" aria-labelledby="guides-title" className="scroll-mt-28 bg-white py-18 sm:py-24">
         <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-8">

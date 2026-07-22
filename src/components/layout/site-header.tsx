@@ -1,14 +1,102 @@
 "use client";
 
-import { Heart, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
+import { Heart, Menu, Package, Phone, Search, ShoppingBag, UserRound, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 
-const navigation = [
-  { label: "Sản phẩm", href: "/san-pham" },
-  { label: "Sản phẩm nổi bật", href: "/#featured" },
+const megaMenu = [
+  {
+    label: "Điện thoại",
+    href: "/san-pham?category=dien-thoai",
+    brands: [
+      { name: "Apple", slug: "apple" },
+      { name: "Samsung", slug: "samsung" },
+      { name: "Xiaomi", slug: "xiaomi" },
+      { name: "OPPO", slug: "oppo" },
+      { name: "Google", slug: "google" },
+      { name: "OnePlus", slug: "oneplus" },
+    ],
+  },
+  {
+    label: "Laptop",
+    href: "/san-pham?category=laptop",
+    brands: [
+      { name: "Apple", slug: "apple" },
+      { name: "ASUS", slug: "asus" },
+      { name: "Dell", slug: "dell" },
+      { name: "HP", slug: "hp" },
+      { name: "Lenovo", slug: "lenovo" },
+      { name: "MSI", slug: "msi" },
+      { name: "Acer", slug: "acer" },
+      { name: "LG", slug: "lg" },
+    ],
+  },
+  {
+    label: "Máy tính bảng",
+    href: "/san-pham?category=may-tinh-bang",
+    brands: [
+      { name: "Apple", slug: "apple" },
+      { name: "Samsung", slug: "samsung" },
+      { name: "Xiaomi", slug: "xiaomi" },
+      { name: "Lenovo", slug: "lenovo" },
+    ],
+  },
+  {
+    label: "Đồng hồ",
+    href: "/san-pham?category=dong-ho-thong-minh",
+    brands: [
+      { name: "Apple", slug: "apple" },
+      { name: "Samsung", slug: "samsung" },
+      { name: "Garmin", slug: "garmin" },
+      { name: "Xiaomi", slug: "xiaomi" },
+    ],
+  },
+  {
+    label: "Âm thanh",
+    href: "/san-pham?category=am-thanh",
+    brands: [
+      { name: "Sony", slug: "sony" },
+      { name: "JBL", slug: "jbl" },
+      { name: "Bose", slug: "bose" },
+      { name: "Sennheiser", slug: "sennheiser" },
+      { name: "Marshall", slug: "marshall" },
+    ],
+  },
+  {
+    label: "Màn hình",
+    href: "/san-pham?category=man-hinh",
+    brands: [
+      { name: "LG", slug: "lg" },
+      { name: "Samsung", slug: "samsung" },
+      { name: "Dell", slug: "dell" },
+      { name: "ASUS", slug: "asus" },
+    ],
+  },
+  {
+    label: "Gaming",
+    href: "/san-pham?category=gaming",
+    brands: [
+      { name: "Razer", slug: "razer" },
+      { name: "Corsair", slug: "corsair" },
+      { name: "SteelSeries", slug: "steelseries" },
+    ],
+  },
+  {
+    label: "Phụ kiện",
+    href: "/san-pham?category=phu-kien",
+    brands: [
+      { name: "Logitech", slug: "logitech" },
+      { name: "Anker", slug: "anker" },
+      { name: "Belkin", slug: "belkin" },
+      { name: "Baseus", slug: "baseus" },
+    ],
+  },
+] as const;
+
+const quickLinks = [
+  { label: "Khuyến mãi", href: "/#featured" },
   { label: "Dựng setup", href: "/#setup" },
   { label: "Nexora Picks", href: "/#picks" },
   { label: "Cẩm nang", href: "/#guides" },
@@ -16,12 +104,18 @@ const navigation = [
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeMega, setActiveMega] = useState<string | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setMenuOpen(false);
+        setSearchOpen(false);
+        setActiveMega(null);
         menuButtonRef.current?.focus();
       }
     }
@@ -30,24 +124,44 @@ export function SiteHeader() {
     return () => document.removeEventListener("keydown", closeOnEscape);
   }, []);
 
+  useEffect(() => {
+    if (searchOpen) {
+      searchInputRef.current?.focus();
+    }
+  }, [searchOpen]);
+
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-surface/90 backdrop-blur-xl">
       <div className="bg-midnight px-4 py-2 text-center text-xs font-semibold tracking-wide text-slate-200">
-        Miễn phí giao hàng cho đơn từ 2 triệu · Đổi mới trong 30 ngày
+        <span className="hidden sm:inline">Miễn phí giao hàng cho đơn từ 2 triệu · Đổi mới trong 30 ngày</span>
+        <span className="sm:hidden">Freeship đơn từ 2 triệu · Đổi mới 30 ngày</span>
       </div>
+
       <div className="mx-auto flex min-h-18 max-w-page items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <BrandMark />
-        <nav aria-label="Điều hướng chính" className="hidden items-center gap-7 lg:flex">
-          {navigation.map((item) => (
-            <Link key={item.href} href={item.href} className="py-3 text-sm font-semibold text-slate-600 transition-colors hover:text-electric">
-              {item.label}
-            </Link>
+
+        <nav aria-label="Điều hướng chính" className="hidden items-center gap-1 lg:flex" onMouseLeave={() => setActiveMega(null)}>
+          {megaMenu.map((item) => (
+            <div key={item.label} onMouseEnter={() => setActiveMega(item.label)}>
+              <Link
+                href={item.href}
+                className="flex items-center gap-1 px-3 py-3 text-sm font-semibold text-slate-600 transition-colors hover:text-electric"
+              >
+                {item.label}
+              </Link>
+            </div>
           ))}
         </nav>
+
         <div className="flex items-center gap-1">
-          <Link href="/san-pham" aria-label="Tìm sản phẩm" className="grid size-11 place-items-center rounded-full text-slate-600 transition-colors hover:bg-white hover:text-electric">
+          <button
+            type="button"
+            aria-label="Tìm sản phẩm"
+            onClick={() => setSearchOpen(true)}
+            className="grid size-11 place-items-center rounded-full text-slate-600 transition-colors hover:bg-white hover:text-electric"
+          >
             <Search className="size-5" aria-hidden="true" />
-          </Link>
+          </button>
           <Link href="/tai-khoan" aria-label="Tài khoản" className="hidden size-11 place-items-center rounded-full text-slate-600 transition-colors hover:bg-white hover:text-electric sm:grid">
             <UserRound className="size-5" aria-hidden="true" />
           </Link>
@@ -70,14 +184,125 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
+
+      {activeMega && (
+        <div
+          className="absolute inset-x-0 top-full z-40 hidden border-t border-slate-200 bg-white shadow-xl lg:block"
+          onMouseEnter={() => setActiveMega(activeMega)}
+          onMouseLeave={() => setActiveMega(null)}
+        >
+          <div className="mx-auto max-w-page px-4 py-6 sm:px-6 lg:px-8">
+            {megaMenu.filter((m) => m.label === activeMega).map((item) => (
+              <div key={item.label} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Danh mục</p>
+                  <Link
+                    href={item.href}
+                    className="mt-3 inline-flex min-h-10 items-center rounded-full bg-electric px-4 text-sm font-bold text-white hover:bg-blue-700"
+                  >
+                    Xem tất cả {item.label}
+                  </Link>
+                </div>
+                <div className="sm:col-span-1 lg:col-span-3">
+                  <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Thương hiệu</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {item.brands.map((brand) => (
+                      <Link
+                        key={brand.slug}
+                        href={`/san-pham?category=${item.href.split("=")[1]}&brand=${brand.slug}`}
+                        className="inline-flex min-h-9 items-center rounded-full border border-slate-200 px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-electric hover:text-electric"
+                      >
+                        {brand.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {searchOpen && (
+        <div className="fixed inset-0 z-[60] bg-midnight/40 backdrop-blur-sm" onClick={() => setSearchOpen(false)}>
+          <div className="mx-auto mt-20 max-w-2xl rounded-2xl bg-white p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center gap-3">
+              <Search className="size-5 text-slate-400" aria-hidden="true" />
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Tìm sản phẩm, thương hiệu, danh mục..."
+                className="flex-1 bg-transparent text-base font-medium text-midnight outline-none placeholder:text-slate-400"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && searchQuery.trim()) {
+                    window.location.href = `/san-pham?search=${encodeURIComponent(searchQuery.trim())}`;
+                  }
+                }}
+              />
+              <button
+                type="button"
+                aria-label="Đóng tìm kiếm"
+                onClick={() => setSearchOpen(false)}
+                className="grid size-9 place-items-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-midnight"
+              >
+                <X className="size-4" aria-hidden="true" />
+              </button>
+            </div>
+            {!searchQuery && (
+              <div className="mt-5 border-t border-slate-100 pt-5">
+                <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Danh mục phổ biến</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {megaMenu.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setSearchOpen(false)}
+                      className="inline-flex min-h-9 items-center rounded-full border border-slate-200 px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-electric hover:text-electric"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+            {searchQuery && (
+              <div className="mt-5 border-t border-slate-100 pt-5">
+                <Link
+                  href={`/san-pham?search=${encodeURIComponent(searchQuery.trim())}`}
+                  onClick={() => setSearchOpen(false)}
+                  className="inline-flex min-h-10 items-center gap-2 rounded-full bg-electric px-4 text-sm font-bold text-white hover:bg-blue-700"
+                >
+                  Xem kết quả cho &ldquo;{searchQuery.trim()}&rdquo;
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {menuOpen ? (
         <nav id="mobile-navigation" aria-label="Điều hướng di động" className="border-t border-slate-200 bg-white px-4 py-3 lg:hidden">
           <div className="mx-auto grid max-w-page gap-1">
-            {navigation.map((item) => (
+            {megaMenu.map((item) => (
               <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="flex min-h-11 items-center rounded-xl px-3 font-semibold text-slate-700 hover:bg-slate-50 hover:text-electric">
                 {item.label}
               </Link>
             ))}
+            <div className="my-2 border-t border-slate-100" />
+            {quickLinks.map((item) => (
+              <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="flex min-h-11 items-center rounded-xl px-3 font-semibold text-slate-700 hover:bg-slate-50 hover:text-electric">
+                {item.label}
+              </Link>
+            ))}
+            <div className="my-2 border-t border-slate-100" />
+            <Link href="/don-hang" onClick={() => setMenuOpen(false)} className="flex min-h-11 items-center gap-2 rounded-xl px-3 font-semibold text-slate-700 hover:bg-slate-50 hover:text-electric">
+              <Package className="size-4" aria-hidden="true" /> Tra cứu đơn hàng
+            </Link>
+            <a href="tel:18002097" className="flex min-h-11 items-center gap-2 rounded-xl px-3 font-semibold text-slate-700 hover:bg-slate-50 hover:text-electric">
+              <Phone className="size-4" aria-hidden="true" /> Hotline: 1800 2097
+            </a>
           </div>
         </nav>
       ) : null}

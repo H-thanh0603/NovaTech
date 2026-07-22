@@ -11,6 +11,9 @@ export type CatalogProduct = Readonly<{
   verdict: string;
   specs: readonly string[];
   featured: boolean;
+  tags?: readonly string[];
+  soldCount?: number;
+  releaseDate?: string;
 }>;
 
 export type CatalogCategory = Readonly<{
@@ -78,7 +81,7 @@ export type CatalogProductDetail = Readonly<{
   featured: boolean;
 }>;
 
-export type ProductSortOption = "featured" | "price-asc" | "price-desc" | "name-asc";
+export type ProductSortOption = "featured" | "price-asc" | "price-desc" | "name-asc" | "newest" | "best-selling";
 
 export type ProductListFilters = Readonly<{
   categorySlug?: string;
@@ -86,6 +89,10 @@ export type ProductListFilters = Readonly<{
   sort?: ProductSortOption;
   page?: number;
   pageSize?: number;
+  search?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  tags?: readonly string[];
 }>;
 
 export type ProductListResult = Readonly<{

@@ -1,19 +1,31 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { Banknote, CreditCard, MapPin, QrCode, Store, Truck, Wallet } from "lucide-react";
 
 import { formatVnd } from "@/features/catalog/catalog.service";
 import type { Cart } from "@/features/cart/cart.types";
 import { CouponPreview } from "@/components/payment/coupon-preview";
 import { placeOrderAction } from "@/features/checkout/checkout.actions";
+import { storeLocations } from "@/features/checkout/store-data";
 
 type CheckoutFormProps = Readonly<{
   cart: Cart;
 }>;
 
+const paymentMethods = [
+  { id: "vnpay", label: "VNPay QR", icon: QrCode, desc: "Quét mã QR để thanh toán" },
+  { id: "momo", label: "MoMo", icon: Wallet, desc: "Ví điện tử MoMo" },
+  { id: "card", label: "Thẻ tín dụng", icon: CreditCard, desc: "Visa / Mastercard / JCB" },
+  { id: "cod", label: "COD", icon: Banknote, desc: "Thanh toán khi nhận hàng" },
+] as const;
+
 export function CheckoutForm({ cart }: CheckoutFormProps) {
   const [state, formAction] = useActionState(placeOrderAction, null);
   const [couponCode, setCouponCode] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState<string>("vnpay");
+  const [deliveryMethod, setDeliveryMethod] = useState<"home" | "pickup">("home");
+  const [selectedStore, setSelectedStore] = useState<string>("");
 
   if (cart.items.length === 0) {
     return (
@@ -30,6 +42,76 @@ export function CheckoutForm({ cart }: CheckoutFormProps) {
     <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
       <form action={formAction} className="flex-1 rounded-panel border border-slate-200 bg-white p-5 sm:p-6">
         <h2 className="font-display text-lg font-bold text-midnight">Thông tin giao hàng</h2>
+
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <button
+            type="button"
+            onClick={() => setDeliveryMethod("home")}
+            className={`flex items-center gap-3 rounded-xl border p-4 text-left transition-colors ${
+              deliveryMethod === "home" ? "border-electric bg-electric/5" : "border-slate-200 hover:border-slate-300"
+            }`}
+          >
+            <span className={`grid size-10 shrink-0 place-items-center rounded-lg ${deliveryMethod === "home" ? "bg-electric text-white" : "bg-slate-100 text-slate-500"}`}>
+              <Truck className="size-5" aria-hidden="true" />
+            </span>
+            <div>
+              <p className="text-sm font-bold text-midnight">Giao tận nơi</p>
+              <p className="text-xs text-slate-500">Giao hàng trong 2-4 giờ nội thành</p>
+            </div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setDeliveryMethod("pickup")}
+            className={`flex items-center gap-3 rounded-xl border p-4 text-left transition-colors ${
+              deliveryMethod === "pickup" ? "border-electric bg-electric/5" : "border-slate-200 hover:border-slate-300"
+            }`}
+          >
+            <span className={`grid size-10 shrink-0 place-items-center rounded-lg ${deliveryMethod === "pickup" ? "bg-electric text-white" : "bg-slate-100 text-slate-500"}`}>
+              <Store className="size-5" aria-hidden="true" />
+            </span>
+            <div>
+              <p className="text-sm font-bold text-midnight">Nhận tại cửa hàng</p>
+              <p className="text-xs text-slate-500">Freeship · Nhận trong 30 phút</p>
+            </div>
+          </button>
+        </div>
+        <input type="hidden" name="deliveryMethod" value={deliveryMethod} />
+
+        {deliveryMethod === "pickup" ? (
+          <div className="mt-4">
+            <h3 className="text-sm font-bold text-midnight">Chọn cửa hàng nhận hàng</h3>
+            <div className="mt-3 flex flex-col gap-3">
+              {storeLocations.map((store) => (
+                <button
+                  key={store.id}
+                  type="button"
+                  onClick={() => setSelectedStore(store.id)}
+                  disabled={!store.inStock}
+                  className={`flex items-start gap-3 rounded-xl border p-4 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
+                    selectedStore === store.id ? "border-electric bg-electric/5" : "border-slate-200 hover:border-slate-300"
+                  }`}
+                >
+                  <span className={`mt-0.5 grid size-9 shrink-0 place-items-center rounded-lg ${selectedStore === store.id ? "bg-electric text-white" : "bg-slate-100 text-slate-500"}`}>
+                    <MapPin className="size-4" aria-hidden="true" />
+                  </span>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-bold text-midnight">{store.name}</p>
+                      {store.inStock ? (
+                        <span className="rounded bg-teal-50 px-2 py-0.5 text-[10px] font-bold text-teal-tech">Còn hàng</span>
+                      ) : (
+                        <span className="rounded bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-500">Hết hàng</span>
+                      )}
+                    </div>
+                    <p className="mt-1 text-xs text-slate-500">{store.address}, {store.city}</p>
+                    <p className="mt-0.5 text-xs text-slate-400">Giờ mở cửa: {store.hours} · {store.phone}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+            <input type="hidden" name="storeId" value={selectedStore} />
+          </div>
+        ) : null}
 
         {state?.error ? (
           <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-600">{state.error}</p>
@@ -79,6 +161,37 @@ export function CheckoutForm({ cart }: CheckoutFormProps) {
           </div>
         </div>
 
+        <div className="mt-6">
+          <h3 className="text-sm font-bold text-midnight">Phương thức thanh toán</h3>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            {paymentMethods.map((method) => {
+              const Icon = method.icon;
+              const isActive = paymentMethod === method.id;
+              return (
+                <button
+                  key={method.id}
+                  type="button"
+                  onClick={() => setPaymentMethod(method.id)}
+                  className={`flex items-center gap-3 rounded-xl border p-4 text-left transition-colors ${
+                    isActive
+                      ? "border-electric bg-electric/5"
+                      : "border-slate-200 bg-white hover:border-slate-300"
+                  }`}
+                >
+                  <span className={`grid size-10 shrink-0 place-items-center rounded-lg ${isActive ? "bg-electric text-white" : "bg-slate-100 text-slate-500"}`}>
+                    <Icon className="size-5" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold text-midnight">{method.label}</p>
+                    <p className="text-xs text-slate-500">{method.desc}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+          <input type="hidden" name="paymentMethod" value={paymentMethod} />
+        </div>
+
         <button type="submit" className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-electric px-6 text-sm font-bold text-white hover:bg-blue-700 sm:w-auto">
           Đặt hàng
         </button>
@@ -99,6 +212,11 @@ export function CheckoutForm({ cart }: CheckoutFormProps) {
             <span className="font-display text-base font-bold text-midnight">Tổng</span>
             <span className="font-display text-xl font-bold text-electric">{formatVnd(cart.subtotal)}</span>
           </div>
+          {cart.subtotal >= 5000000 ? (
+            <p className="mt-3 rounded-lg bg-teal-50 px-3 py-2 text-xs font-semibold text-teal-tech">
+              Hỗ trợ trả góp 0% · {formatVnd(Math.round(cart.subtotal / 12))}/tháng × 12 tháng
+            </p>
+          ) : null}
         </div>
       </aside>
     </div>

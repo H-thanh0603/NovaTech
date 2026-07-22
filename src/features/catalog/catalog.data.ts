@@ -451,13 +451,13 @@ export const catalogProducts: readonly CatalogProduct[] = [
     "featured": false
   },
   {
-    "id": "samsung-galaxy-s25",
-    "slug": "samsung-galaxy-s25",
+    "id": "samsung-galaxy-s25-plus",
+    "slug": "samsung-galaxy-s25-plus",
     "name": "Samsung Galaxy S25+",
     "category": "Điện thoại",
     "price": 25990000,
     "compareAtPrice": 28070000,
-    "imageUrl": "https://picsum.photos/seed/samsung-galaxy-s25-a/1200/1200",
+    "imageUrl": "https://picsum.photos/seed/samsung-galaxy-s25-plus-a/1200/1200",
     "imageAlt": "Samsung Galaxy S25+",
     "verdict": "Bản cân bằng giữa kích thước và thời lượng pin.",
     "specs": [
