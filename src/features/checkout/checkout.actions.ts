@@ -32,6 +32,7 @@ import { redeemCoupon, validateCoupon } from "@/features/payment/coupon.service"
 import { createPaymentSession } from "@/features/payment/payment.service";
 import { createOrder } from "@/features/order/order.service";
 import type { CheckoutFormState } from "@/features/cart/cart.types";
+import { sanitizeEmail, sanitizeNote, sanitizePhone, sanitizeText } from "@/lib/sanitize";
 
 async function getCartFromCookie(): Promise<Cart> {
   const cookieStore = await cookies();
@@ -109,19 +110,19 @@ export async function placeOrderAction(
   formData: FormData,
 ): Promise<{ success: boolean; error?: string; orderCode?: string }> {
   const form: CheckoutFormState = {
-    email: String(formData.get("email") ?? ""),
-    phone: String(formData.get("phone") ?? ""),
+    email: sanitizeEmail(String(formData.get("email") ?? "")),
+    phone: sanitizePhone(String(formData.get("phone") ?? "")),
     address: {
-      name: String(formData.get("name") ?? ""),
-      phone: String(formData.get("phone") ?? ""),
-      province: String(formData.get("province") ?? ""),
-      district: String(formData.get("district") ?? ""),
-      ward: String(formData.get("ward") ?? ""),
-      line1: String(formData.get("line1") ?? ""),
+      name: sanitizeText(String(formData.get("name") ?? "")),
+      phone: sanitizePhone(String(formData.get("phone") ?? "")),
+      province: sanitizeText(String(formData.get("province") ?? "")),
+      district: sanitizeText(String(formData.get("district") ?? "")),
+      ward: sanitizeText(String(formData.get("ward") ?? "")),
+      line1: sanitizeText(String(formData.get("line1") ?? "")),
     },
-    note: String(formData.get("note") ?? "") || undefined,
-    couponCode: String(formData.get("couponCode") ?? "") || undefined,
-    paymentMethod: String(formData.get("paymentMethod") ?? "") || undefined,
+    note: sanitizeNote(String(formData.get("note") ?? "")) || undefined,
+    couponCode: sanitizeText(String(formData.get("couponCode") ?? "")) || undefined,
+    paymentMethod: sanitizeText(String(formData.get("paymentMethod") ?? "")) || undefined,
   };
 
   const formErrors = validateCheckoutForm(form);

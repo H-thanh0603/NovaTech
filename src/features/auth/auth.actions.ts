@@ -9,13 +9,14 @@ import {
   SESSION_COOKIE_NAME,
   SESSION_MAX_AGE,
 } from "@/features/auth/auth.service";
+import { sanitizeEmail, sanitizeText } from "@/lib/sanitize";
 
 export async function loginAction(
   _prevState: { success: boolean; error?: string } | null,
   formData: FormData,
 ): Promise<{ success: boolean; error?: string }> {
-  const email = String(formData.get("email") ?? "");
-  const password = String(formData.get("password") ?? "");
+  const email = sanitizeEmail(String(formData.get("email") ?? ""));
+  const password = String(formData.get("password") ?? "").slice(0, 200);
 
   const result = login({ email, password });
 
@@ -38,9 +39,9 @@ export async function registerAction(
   _prevState: { success: boolean; error?: string } | null,
   formData: FormData,
 ): Promise<{ success: boolean; error?: string }> {
-  const email = String(formData.get("email") ?? "");
-  const password = String(formData.get("password") ?? "");
-  const name = String(formData.get("name") ?? "");
+  const email = sanitizeEmail(String(formData.get("email") ?? ""));
+  const password = String(formData.get("password") ?? "").slice(0, 200);
+  const name = sanitizeText(String(formData.get("name") ?? ""), 100);
 
   const result = register({ email, password, name });
 
