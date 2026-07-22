@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Phone, ShieldCheck, Truck, RotateCcw, CreditCard, Youtube } from "lucide-react";
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand/brand-mark";
@@ -37,9 +37,35 @@ const footerGroups = [
   },
 ] as const;
 
+const trustBadges = [
+  { icon: ShieldCheck, label: "Bảo hành chính hãng" },
+  { icon: Truck, label: "Giao hàng toàn quốc" },
+  { icon: RotateCcw, label: "Đổi trả 30 ngày" },
+  { icon: CreditCard, label: "Thanh toán an toàn" },
+] as const;
+
+const socialLinks = [
+  { icon: Facebook, href: "https://facebook.com/nexora.vn", label: "Facebook" },
+  { icon: Instagram, href: "https://instagram.com/nexora.vn", label: "Instagram" },
+  { icon: Youtube, href: "https://youtube.com/@nexora", label: "Youtube" },
+] as const;
+
 export function SiteFooter() {
   return (
     <footer className="bg-midnight text-slate-300">
+      <div className="border-b border-white/10">
+        <div className="mx-auto grid max-w-page gap-4 px-4 py-6 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+          {trustBadges.map(({ icon: Icon, label }) => (
+            <div key={label} className="flex items-center gap-3">
+              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white/10 text-mint">
+                <Icon className="size-5" aria-hidden="true" />
+              </span>
+              <p className="text-sm font-semibold text-white">{label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="mx-auto max-w-page px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-[1.2fr_2fr]">
           <div className="max-w-sm">
@@ -84,8 +110,17 @@ export function SiteFooter() {
         <div className="flex flex-col gap-5 pt-7 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Nexora Tech. Mua công nghệ thông minh hơn.</p>
           <div className="flex gap-2" aria-label="Mạng xã hội">
-            {[Instagram, Facebook, Youtube].map((Icon, index) => (
-              <span key={index} className="grid size-10 place-items-center rounded-full border border-white/10 text-slate-500" aria-hidden="true"><Icon className="size-4" /></span>
+            {socialLinks.map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="grid size-10 place-items-center rounded-full border border-white/10 text-slate-400 transition-colors hover:border-mint hover:text-mint"
+              >
+                <Icon className="size-4" aria-hidden="true" />
+              </a>
             ))}
           </div>
         </div>

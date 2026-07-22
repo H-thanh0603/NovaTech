@@ -49,8 +49,10 @@ describe("storefront content", () => {
     );
 
     expect(markup).toContain('alt="Laptop bạc mở trên bàn"');
-    expect(markup).toContain("Nhẹ và đủ mạnh cho công việc.");
+    expect(markup).toContain("Laptop One");
     expect(markup).toContain("28.990.000");
     expect(markup).toContain('href="/san-pham/laptop-one"');
+    expect(markup).toContain("Trả góp 0%");
+    expect(markup).toContain("Tặng kèm phụ kiện");
   });
 });

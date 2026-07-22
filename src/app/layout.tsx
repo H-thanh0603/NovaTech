@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 
 import { WishlistProvider } from "@/features/wishlist/wishlist-context";
+import { FloatingContact } from "@/components/layout/floating-contact";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -36,7 +37,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="vi" className={`${manrope.variable} ${spaceGrotesk.variable}`}>
       <body>
-        <WishlistProvider>{children}</WishlistProvider>
+        <WishlistProvider>
+          {children}
+          <FloatingContact />
+        </WishlistProvider>
       </body>
     </html>
   );

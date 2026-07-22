@@ -2,6 +2,7 @@ import {
   ArrowRight,
   BriefcaseBusiness,
   Check,
+  Flame,
   Gamepad2,
   GraduationCap,
   Headphones,
@@ -86,7 +87,7 @@ function CategorySection({
             Xem tất cả <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {products.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
       </div>
@@ -95,6 +96,9 @@ function CategorySection({
 }
 
 export function HomeSections({ products, phones, laptops, audio }: HomeSectionsProps) {
+  const flashSaleProducts = (phones ?? []).filter((p) => p.compareAtPrice && p.compareAtPrice > p.price).slice(0, 5);
+  const hasFlashSale = flashSaleProducts.length > 0;
+
   return (
     <>
       <section aria-labelledby="quick-finder-title" className="border-b border-slate-200 bg-white">
@@ -112,17 +116,36 @@ export function HomeSections({ products, phones, laptops, audio }: HomeSectionsP
         </div>
       </section>
 
-      <section id="featured" aria-labelledby="featured-title" className="scroll-mt-28 bg-surface py-18 sm:py-24">
+      {hasFlashSale ? (
+        <section aria-labelledby="flash-sale-title" className="scroll-mt-28 bg-gradient-to-r from-red-50 to-orange-50 py-10 sm:py-14">
+          <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-3">
+              <span className="grid size-10 place-items-center rounded-full bg-red-500 text-white">
+                <Flame className="size-5" aria-hidden="true" />
+              </span>
+              <div>
+                <h2 id="flash-sale-title" className="font-display text-2xl font-bold text-red-500">Flash Sale</h2>
+                <p className="text-xs font-semibold text-slate-500">Sản phẩm giảm giá — số lượng có hạn</p>
+              </div>
+            </div>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+              {flashSaleProducts.map((product) => <ProductCard key={product.id} product={product} />)}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section id="featured" aria-labelledby="featured-title" className="scroll-mt-28 bg-surface py-14 sm:py-18">
         <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-electric">Featured drop · 07/2026</p>
-              <h2 id="featured-title" className="mt-3 max-w-2xl font-display text-3xl font-semibold tracking-[-0.045em] text-midnight sm:text-5xl">Những thiết bị đáng chú ý ngay lúc này.</h2>
+              <h2 id="featured-title" className="mt-3 max-w-2xl font-display text-3xl font-semibold tracking-[-0.045em] text-midnight sm:text-4xl">Những thiết bị đáng chú ý ngay lúc này.</h2>
             </div>
             <p className="max-w-md text-sm leading-7 text-slate-600">Ít lựa chọn hơn, nhưng mỗi lựa chọn đều có lý do rõ ràng để xuất hiện.</p>
           </div>
           {products.length > 0 ? (
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {products.map((product) => <ProductCard key={product.id} product={product} />)}
             </div>
           ) : (

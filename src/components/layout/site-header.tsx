@@ -10,6 +10,13 @@ const megaMenu = [
   {
     label: "Điện thoại",
     href: "/san-pham?category=dien-thoai",
+    subCategories: [
+      { name: "iPhone", href: "/san-pham?category=dien-thoai&brand=apple" },
+      { name: "Samsung Galaxy", href: "/san-pham?category=dien-thoai&brand=samsung" },
+      { name: "Xiaomi", href: "/san-pham?category=dien-thoai&brand=xiaomi" },
+      { name: "OPPO", href: "/san-pham?category=dien-thoai&brand=oppo" },
+      { name: "Google Pixel", href: "/san-pham?category=dien-thoai&brand=google" },
+    ],
     brands: [
       { name: "Apple", slug: "apple" },
       { name: "Samsung", slug: "samsung" },
@@ -22,6 +29,12 @@ const megaMenu = [
   {
     label: "Laptop",
     href: "/san-pham?category=laptop",
+    subCategories: [
+      { name: "MacBook", href: "/san-pham?category=laptop&brand=apple" },
+      { name: "Laptop Gaming", href: "/san-pham?category=laptop&tag=gaming" },
+      { name: "Laptop Văn phòng", href: "/san-pham?category=laptop&tag=office" },
+      { name: "Laptop Đồ họa", href: "/san-pham?category=laptop&tag=creative" },
+    ],
     brands: [
       { name: "Apple", slug: "apple" },
       { name: "ASUS", slug: "asus" },
@@ -36,6 +49,11 @@ const megaMenu = [
   {
     label: "Máy tính bảng",
     href: "/san-pham?category=may-tinh-bang",
+    subCategories: [
+      { name: "iPad", href: "/san-pham?category=may-tinh-bang&brand=apple" },
+      { name: "Samsung Tab", href: "/san-pham?category=may-tinh-bang&brand=samsung" },
+      { name: "Xiaomi Pad", href: "/san-pham?category=may-tinh-bang&brand=xiaomi" },
+    ],
     brands: [
       { name: "Apple", slug: "apple" },
       { name: "Samsung", slug: "samsung" },
@@ -46,6 +64,11 @@ const megaMenu = [
   {
     label: "Đồng hồ",
     href: "/san-pham?category=dong-ho-thong-minh",
+    subCategories: [
+      { name: "Apple Watch", href: "/san-pham?category=dong-ho-thong-minh&brand=apple" },
+      { name: "Samsung Watch", href: "/san-pham?category=dong-ho-thong-minh&brand=samsung" },
+      { name: "Garmin", href: "/san-pham?category=dong-ho-thong-minh&brand=garmin" },
+    ],
     brands: [
       { name: "Apple", slug: "apple" },
       { name: "Samsung", slug: "samsung" },
@@ -56,6 +79,10 @@ const megaMenu = [
   {
     label: "Âm thanh",
     href: "/san-pham?category=am-thanh",
+    subCategories: [
+      { name: "Tai nghe Bluetooth", href: "/san-pham?category=am-thanh&tag=wireless" },
+      { name: "Loa thông minh", href: "/san-pham?category=am-thanh&tag=smart-speaker" },
+    ],
     brands: [
       { name: "Sony", slug: "sony" },
       { name: "JBL", slug: "jbl" },
@@ -67,6 +94,10 @@ const megaMenu = [
   {
     label: "Màn hình",
     href: "/san-pham?category=man-hinh",
+    subCategories: [
+      { name: "Màn hình Gaming", href: "/san-pham?category=man-hinh&tag=gaming" },
+      { name: "Màn hình Đồ họa", href: "/san-pham?category=man-hinh&tag=creative" },
+    ],
     brands: [
       { name: "LG", slug: "lg" },
       { name: "Samsung", slug: "samsung" },
@@ -77,6 +108,11 @@ const megaMenu = [
   {
     label: "Gaming",
     href: "/san-pham?category=gaming",
+    subCategories: [
+      { name: "Bàn phím cơ", href: "/san-pham?category=gaming&tag=keyboard" },
+      { name: "Chuột gaming", href: "/san-pham?category=gaming&tag=mouse" },
+      { name: "Tai nghe gaming", href: "/san-pham?category=gaming&tag=headset" },
+    ],
     brands: [
       { name: "Razer", slug: "razer" },
       { name: "Corsair", slug: "corsair" },
@@ -86,6 +122,11 @@ const megaMenu = [
   {
     label: "Phụ kiện",
     href: "/san-pham?category=phu-kien",
+    subCategories: [
+      { name: "Sạc & Cáp", href: "/san-pham?category=phu-kien&tag=charger" },
+      { name: "Bao da & Ốp lưng", href: "/san-pham?category=phu-kien&tag=case" },
+      { name: "Hub & Adapter", href: "/san-pham?category=phu-kien&tag=hub" },
+    ],
     brands: [
       { name: "Logitech", slug: "logitech" },
       { name: "Anker", slug: "anker" },
@@ -133,8 +174,17 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-surface/90 backdrop-blur-xl">
       <div className="bg-midnight px-4 py-2 text-center text-xs font-semibold tracking-wide text-slate-200">
-        <span className="hidden sm:inline">Miễn phí giao hàng cho đơn từ 2 triệu · Đổi mới trong 30 ngày</span>
-        <span className="sm:hidden">Freeship đơn từ 2 triệu · Đổi mới 30 ngày</span>
+        <div className="mx-auto flex max-w-page items-center justify-between">
+          <span className="hidden sm:inline">Miễn phí giao hàng cho đơn từ 2 triệu · Đổi mới trong 30 ngày</span>
+          <span className="sm:hidden">Freeship đơn từ 2 triệu</span>
+          <div className="hidden items-center gap-4 sm:flex">
+            <a href="tel:18002097" className="inline-flex items-center gap-1.5 text-mint hover:text-white">
+              <Phone className="size-3.5" aria-hidden="true" /> Hotline: 1800 2097
+            </a>
+            <Link href="/thu-cu-doi-moi" className="text-slate-300 hover:text-white">Thu cũ đổi mới</Link>
+            <Link href="/khuyen-mai" className="text-slate-300 hover:text-white">Khuyến mãi</Link>
+          </div>
+        </div>
       </div>
 
       <div className="mx-auto flex min-h-18 max-w-page items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
@@ -165,9 +215,9 @@ export function SiteHeader() {
           <Link href="/tai-khoan" aria-label="Tài khoản" className="hidden size-11 place-items-center rounded-full text-slate-600 transition-colors hover:bg-white hover:text-electric sm:grid">
             <UserRound className="size-5" aria-hidden="true" />
           </Link>
-          <button type="button" disabled aria-label="Danh sách yêu thích — sắp ra mắt" className="hidden size-11 place-items-center rounded-full text-slate-400 disabled:cursor-not-allowed sm:grid">
+          <Link href="/san-pham" aria-label="Sản phẩm yêu thích" className="hidden size-11 place-items-center rounded-full text-slate-600 transition-colors hover:bg-white hover:text-electric sm:grid">
             <Heart className="size-5" aria-hidden="true" />
-          </button>
+          </Link>
           <Link href="/gio-hang" aria-label="Giỏ hàng" className="grid size-11 place-items-center rounded-full text-slate-600 transition-colors hover:bg-white hover:text-electric">
             <ShoppingBag className="size-5" aria-hidden="true" />
           </Link>
@@ -203,7 +253,22 @@ export function SiteHeader() {
                     Xem tất cả {item.label}
                   </Link>
                 </div>
-                <div className="sm:col-span-1 lg:col-span-3">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Phân loại</p>
+                  <ul className="mt-3 space-y-2">
+                    {item.subCategories.map((sub) => (
+                      <li key={sub.name}>
+                        <Link
+                          href={sub.href}
+                          className="text-sm font-semibold text-slate-600 transition-colors hover:text-electric"
+                        >
+                          {sub.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="sm:col-span-1 lg:col-span-2">
                   <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Thương hiệu</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {item.brands.map((brand) => (
