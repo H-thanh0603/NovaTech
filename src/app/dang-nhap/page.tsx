@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "Đăng nhập vào tài khoản Nexora.",
 };
 
+export const dynamic = "force-dynamic";
+
 type SearchParams = Promise<{ redirect?: string }>;
 
 export default async function LoginPage({ searchParams }: Readonly<{ searchParams: SearchParams }>) {
