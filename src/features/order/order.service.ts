@@ -44,6 +44,13 @@ export function listOrdersByEmail(email: string): OrderRecord[] {
     .filter((order): order is OrderRecord => order != null && order.email.toLowerCase() === normalized);
 }
 
+export function listAllOrders(): OrderRecord[] {
+  return [...insertionOrder]
+    .reverse()
+    .map((code) => ordersByCode.get(code))
+    .filter((order): order is OrderRecord => order != null);
+}
+
 export function updateOrderStatus(code: string, status: OrderStatus): OrderRecord | null {
   const order = ordersByCode.get(code);
   if (!order) return null;

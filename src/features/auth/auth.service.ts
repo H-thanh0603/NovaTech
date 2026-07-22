@@ -56,6 +56,15 @@ function ensureDemoUser(): void {
     role: "CUSTOMER",
   };
   users.set(demoUser.email, demoUser);
+
+  const adminUser: StoredUser = {
+    id: "admin-user",
+    email: "admin@nexora.vn",
+    name: "Quản trị viên",
+    passwordHash: hashPassword("admin123"),
+    role: "ADMIN",
+  };
+  users.set(adminUser.email, adminUser);
 }
 
 function toAuthUser(user: StoredUser): AuthUser {

@@ -3,13 +3,15 @@ import { NextResponse } from "next/server";
 import { SESSION_COOKIE_NAME } from "@/features/auth/auth-edge";
 
 const protectedPaths = ["/tai-khoan"];
+const adminPaths = ["/admin"];
 
 export function middleware(request: Request) {
   const url = new URL(request.url);
   const pathname = url.pathname;
 
   const isProtected = protectedPaths.some((path) => pathname.startsWith(path));
-  if (!isProtected) {
+  const isAdminPath = adminPaths.some((path) => pathname.startsWith(path));
+  if (!isProtected && !isAdminPath) {
     return NextResponse.next();
   }
 
@@ -28,9 +30,21 @@ export function middleware(request: Request) {
     return NextResponse.redirect(loginUrl);
   }
 
+  if (isAdminPath) {
+    try {
+      const [data] = token.split(".");
+      const payload = JSON.parse(Buffer.from(data, "base64url").toString()) as { role?: string };
+      if (payload.role !== "ADMIN") {
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+    } catch {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/tai-khoan/:path*"],
+  matcher: ["/tai-khoan/:path*", "/admin/:path*"]
 };
