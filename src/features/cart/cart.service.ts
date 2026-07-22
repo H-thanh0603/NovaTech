@@ -85,6 +85,9 @@ export async function createCartItem(
   }
 
   const { product, variant } = resolved;
+  if (product.priceStatus === "CONTACT") {
+    throw new Error("Sản phẩm này cần liên hệ để nhận báo giá.");
+  }
   const validQty = validateQuantity(quantity);
 
   if (variant.stock < validQty) {

@@ -6,7 +6,7 @@ Replace the existing mistaken placeholder product images and old catalogue with 
 
 ## Data import
 
-- `scripts/sync-cphub-catalog.ts` discovers product URLs from CP Hub's product sitemaps and fetches each public product JSON document with bounded concurrency. It is designed for up to 10,000 products.
+- `scripts/sync-cphub-catalog.ts` reads CP Hub's public collection API and imports a curated maximum of 200 newest products. This keeps the NovaTech student project responsive while preserving a representative catalog.
 - The generated catalogue has one compact product record per handle: title, price state, primary image, up to three gallery images, vendor, product type, short description, up to eight extracted specifications, variants, source URL and source update date. Full HTML descriptions are not copied, and detail records are derived from this single dataset instead of duplicating the catalogue in a second file.
 - A stable NovaTech taxonomy maps source product types into the CP Hub-inspired top-level groups (server and components, computers, peripherals, gaming, VR and streaming, office, networking, utilities, and software). Product type remains a secondary filter; unmatched types go to `Khác` and are reported by the importer.
 - `priceStatus` is `AVAILABLE` or `CONTACT`. Only `AVAILABLE` products have a numeric price, may appear in price filters or sort order, and may be added to the cart. `CONTACT` products render `Liên hệ` and link to the contact action.

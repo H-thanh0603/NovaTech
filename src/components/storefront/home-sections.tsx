@@ -21,7 +21,7 @@ import { ProductCard } from "./product-card";
 
 const quickFinders = [
   { label: "Laptop cho sinh viên", icon: GraduationCap },
-  { label: "Điện thoại dưới 15 triệu", icon: Smartphone },
+  { label: "Màn hình gaming 165Hz", icon: Smartphone },
   { label: "Setup làm việc tại nhà", icon: BriefcaseBusiness },
   { label: "Góc gaming gọn đẹp", icon: Gamepad2 },
 ] as const;
@@ -96,7 +96,7 @@ function CategorySection({
 }
 
 export function HomeSections({ products, phones, laptops, audio }: HomeSectionsProps) {
-  const flashSaleProducts = (phones ?? []).filter((p) => p.compareAtPrice && p.compareAtPrice > p.price).slice(0, 5);
+  const flashSaleProducts = (phones ?? []).filter((p) => p.priceStatus !== "CONTACT" && p.compareAtPrice && p.compareAtPrice > p.price).slice(0, 5);
   const hasFlashSale = flashSaleProducts.length > 0;
 
   return (
@@ -160,10 +160,10 @@ export function HomeSections({ products, phones, laptops, audio }: HomeSectionsP
 
       <CategorySection
         id="phones"
-        title="Điện thoại bán chạy"
-        eyebrow="Điện thoại · Hot nhất"
+        title="Gaming Gear bán chạy"
+        eyebrow="Gaming · Hot nhất"
         products={phones ?? []}
-        categoryHref="/san-pham?category=dien-thoai"
+        categoryHref="/san-pham?category=gaming"
       />
 
       <section id="setup" aria-labelledby="setup-title" className="scroll-mt-28 bg-white py-18 sm:py-24">

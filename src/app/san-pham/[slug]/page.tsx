@@ -41,7 +41,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   const relatedResult = await listProducts(repository, {
     categorySlug: product.categorySlug,
-    sort: "best-selling",
+    sort: "newest",
     pageSize: 5,
   });
   const related = relatedResult.items.filter((p) => p.slug !== slug).slice(0, 4);

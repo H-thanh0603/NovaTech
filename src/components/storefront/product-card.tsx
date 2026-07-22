@@ -25,7 +25,8 @@ function extractVariantPills(specs: readonly string[]): string[] {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const hasDiscount = product.compareAtPrice && product.compareAtPrice > product.price;
+  const isContactOnly = product.priceStatus === "CONTACT";
+  const hasDiscount = !isContactOnly && product.compareAtPrice && product.compareAtPrice > product.price;
   const discountPercent = hasDiscount
     ? Math.round((1 - product.price / product.compareAtPrice!) * 100)
     : 0;
@@ -68,7 +69,9 @@ export function ProductCard({ product }: ProductCardProps) {
         ) : null}
 
         <div className="mt-auto pt-4">
-          {hasDiscount ? (
+          {isContactOnly ? (
+            <p className="text-lg font-bold text-electric">Liên hệ</p>
+          ) : hasDiscount ? (
             <div className="flex items-baseline gap-2">
               <p className="text-lg font-bold text-red-500">{formatVnd(product.price)}</p>
               <p className="text-xs text-slate-400 line-through">{formatVnd(product.compareAtPrice!)}</p>
@@ -76,11 +79,15 @@ export function ProductCard({ product }: ProductCardProps) {
           ) : (
             <p className="text-lg font-bold text-midnight">{formatVnd(product.price)}</p>
           )}
-          <p className="mt-1 text-[11px] font-semibold text-teal-tech">Trả góp 0%</p>
-          <div className="mt-2 flex items-center gap-1.5 text-[11px] text-slate-400">
-            <Gift className="size-3.5 text-amber-500" aria-hidden="true" />
-            <span>Tặng kèm phụ kiện</span>
-          </div>
+          {!isContactOnly ? (
+            <>
+              <p className="mt-1 text-[11px] font-semibold text-teal-tech">Trả góp 0%</p>
+              <div className="mt-2 flex items-center gap-1.5 text-[11px] text-slate-400">
+                <Gift className="size-3.5 text-amber-500" aria-hidden="true" />
+                <span>Tặng kèm phụ kiện</span>
+              </div>
+            </>
+          ) : null}
         </div>
       </div>
     </Link>

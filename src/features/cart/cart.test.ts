@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { InMemoryCatalogRepository } from "@/features/catalog/catalog.repository";
+import { catalogProducts } from "@/features/catalog/catalog.data";
 import {
   addItem,
   computeTotals,
@@ -92,10 +93,11 @@ describe("cart service", () => {
 
   it("creates a cart item from repository", async () => {
     const repository = new InMemoryCatalogRepository();
-    const detail = await repository.getProductBySlug("macbook-air-m4-13");
+    const product = catalogProducts.find((item) => item.variants && item.variants.length > 0)!;
+    const detail = await repository.getProductBySlug(product.slug);
     const firstSku = detail!.variants[0].sku;
-    const item = await createCartItem(repository, "macbook-air-m4-13", firstSku, 2);
-    expect(item.productName).toBe("MacBook Air M4 13\"");
+    const item = await createCartItem(repository, product.slug, firstSku, 2);
+    expect(item.productName).toBe(product.name);
     expect(item.sku).toBe(firstSku);
     expect(item.quantity).toBe(2);
     expect(item.lineTotal).toBe(item.unitPrice * 2);
@@ -108,6 +110,6 @@ describe("cart service", () => {
 
   it("rejects unknown variant sku", async () => {
     const repository = new InMemoryCatalogRepository();
-    await expect(createCartItem(repository, "macbook-air-m4-13", "BAD-SKU", 1)).rejects.toThrow();
+    await expect(createCartItem(repository, "laptop-acer-aspire-lite-14", "BAD-SKU", 1)).rejects.toThrow();
   });
 });

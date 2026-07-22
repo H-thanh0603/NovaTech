@@ -5,75 +5,38 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { BrandMark } from "@/components/brand/brand-mark";
+import { catalogNavigation } from "@/features/catalog/catalog-navigation.data";
 
 const megaMenu = [
-  {
-    label: "Điện thoại",
-    href: "/san-pham?category=dien-thoai",
-    subCategories: [
-      { name: "iPhone", href: "/san-pham?category=dien-thoai&brand=apple" },
-      { name: "Samsung Galaxy", href: "/san-pham?category=dien-thoai&brand=samsung" },
-      { name: "Xiaomi", href: "/san-pham?category=dien-thoai&brand=xiaomi" },
-      { name: "OPPO", href: "/san-pham?category=dien-thoai&brand=oppo" },
-      { name: "Google Pixel", href: "/san-pham?category=dien-thoai&brand=google" },
-    ],
-    brands: [
-      { name: "Apple", slug: "apple" },
-      { name: "Samsung", slug: "samsung" },
-      { name: "Xiaomi", slug: "xiaomi" },
-      { name: "OPPO", slug: "oppo" },
-      { name: "Google", slug: "google" },
-      { name: "OnePlus", slug: "oneplus" },
-    ],
-  },
   {
     label: "Laptop",
     href: "/san-pham?category=laptop",
     subCategories: [
-      { name: "MacBook", href: "/san-pham?category=laptop&brand=apple" },
       { name: "Laptop Gaming", href: "/san-pham?category=laptop&tag=gaming" },
       { name: "Laptop Văn phòng", href: "/san-pham?category=laptop&tag=office" },
-      { name: "Laptop Đồ họa", href: "/san-pham?category=laptop&tag=creative" },
+      { name: "Laptop Sinh viên", href: "/san-pham?category=laptop&tag=student" },
     ],
     brands: [
-      { name: "Apple", slug: "apple" },
-      { name: "ASUS", slug: "asus" },
-      { name: "Dell", slug: "dell" },
-      { name: "HP", slug: "hp" },
-      { name: "Lenovo", slug: "lenovo" },
-      { name: "MSI", slug: "msi" },
       { name: "Acer", slug: "acer" },
+      { name: "MSI", slug: "msi" },
+      { name: "ASUS", slug: "asus" },
+    ],
+  },
+  {
+    label: "Màn hình",
+    href: "/san-pham?category=man-hinh",
+    subCategories: [
+      { name: "Màn hình Gaming", href: "/san-pham?category=man-hinh&tag=gaming" },
+      { name: "Màn hình Văn phòng", href: "/san-pham?category=man-hinh&tag=office" },
+      { name: "Màn hình Đồ họa", href: "/san-pham?category=man-hinh&tag=creative" },
+    ],
+    brands: [
+      { name: "ASUS", slug: "asus" },
+      { name: "MSI", slug: "msi" },
+      { name: "Philips", slug: "philips" },
+      { name: "AOC", slug: "aoc" },
       { name: "LG", slug: "lg" },
-    ],
-  },
-  {
-    label: "Máy tính bảng",
-    href: "/san-pham?category=may-tinh-bang",
-    subCategories: [
-      { name: "iPad", href: "/san-pham?category=may-tinh-bang&brand=apple" },
-      { name: "Samsung Tab", href: "/san-pham?category=may-tinh-bang&brand=samsung" },
-      { name: "Xiaomi Pad", href: "/san-pham?category=may-tinh-bang&brand=xiaomi" },
-    ],
-    brands: [
-      { name: "Apple", slug: "apple" },
       { name: "Samsung", slug: "samsung" },
-      { name: "Xiaomi", slug: "xiaomi" },
-      { name: "Lenovo", slug: "lenovo" },
-    ],
-  },
-  {
-    label: "Đồng hồ",
-    href: "/san-pham?category=dong-ho-thong-minh",
-    subCategories: [
-      { name: "Apple Watch", href: "/san-pham?category=dong-ho-thong-minh&brand=apple" },
-      { name: "Samsung Watch", href: "/san-pham?category=dong-ho-thong-minh&brand=samsung" },
-      { name: "Garmin", href: "/san-pham?category=dong-ho-thong-minh&brand=garmin" },
-    ],
-    brands: [
-      { name: "Apple", slug: "apple" },
-      { name: "Samsung", slug: "samsung" },
-      { name: "Garmin", slug: "garmin" },
-      { name: "Xiaomi", slug: "xiaomi" },
     ],
   },
   {
@@ -92,49 +55,55 @@ const megaMenu = [
     ],
   },
   {
-    label: "Màn hình",
-    href: "/san-pham?category=man-hinh",
-    subCategories: [
-      { name: "Màn hình Gaming", href: "/san-pham?category=man-hinh&tag=gaming" },
-      { name: "Màn hình Đồ họa", href: "/san-pham?category=man-hinh&tag=creative" },
-    ],
-    brands: [
-      { name: "LG", slug: "lg" },
-      { name: "Samsung", slug: "samsung" },
-      { name: "Dell", slug: "dell" },
-      { name: "ASUS", slug: "asus" },
-    ],
-  },
-  {
     label: "Gaming",
     href: "/san-pham?category=gaming",
     subCategories: [
       { name: "Bàn phím cơ", href: "/san-pham?category=gaming&tag=keyboard" },
       { name: "Chuột gaming", href: "/san-pham?category=gaming&tag=mouse" },
       { name: "Tai nghe gaming", href: "/san-pham?category=gaming&tag=headset" },
+      { name: "Card đồ họa", href: "/san-pham?category=gaming&tag=gpu" },
     ],
     brands: [
-      { name: "Razer", slug: "razer" },
-      { name: "Corsair", slug: "corsair" },
-      { name: "SteelSeries", slug: "steelseries" },
+      { name: "DAREU", slug: "dareu" },
+      { name: "Zidli", slug: "zidli" },
+      { name: "OCPC", slug: "ocpc" },
+      { name: "Redragon", slug: "redragon" },
     ],
   },
   {
-    label: "Phụ kiện",
+    label: "Linh kiện PC",
     href: "/san-pham?category=phu-kien",
     subCategories: [
-      { name: "Sạc & Cáp", href: "/san-pham?category=phu-kien&tag=charger" },
-      { name: "Bao da & Ốp lưng", href: "/san-pham?category=phu-kien&tag=case" },
-      { name: "Hub & Adapter", href: "/san-pham?category=phu-kien&tag=hub" },
+      { name: "CPU", href: "/san-pham?category=phu-kien&tag=cpu" },
+      { name: "Bo mạch chủ", href: "/san-pham?category=phu-kien&tag=mainboard" },
+      { name: "Nguồn", href: "/san-pham?category=phu-kien&tag=psu" },
+      { name: "SSD", href: "/san-pham?category=phu-kien&tag=ssd" },
+      { name: "Vỏ case", href: "/san-pham?category=phu-kien&tag=case" },
+      { name: "Tản nhiệt", href: "/san-pham?category=phu-kien&tag=cooler" },
+      { name: "Camera & Network", href: "/san-pham?category=phu-kien&tag=network" },
     ],
     brands: [
-      { name: "Logitech", slug: "logitech" },
-      { name: "Anker", slug: "anker" },
-      { name: "Belkin", slug: "belkin" },
-      { name: "Baseus", slug: "baseus" },
+      { name: "Intel", slug: "intel" },
+      { name: "AMD", slug: "amd" },
+      { name: "ASUS", slug: "asus" },
+      { name: "MSI", slug: "msi" },
+      { name: "ASRock", slug: "asrock" },
+      { name: "Gigabyte", slug: "gigabyte" },
+      { name: "Thermalright", slug: "thermalright" },
+      { name: "Dahua", slug: "dahua" },
+      { name: "Hikvision", slug: "hikvision" },
     ],
   },
 ] as const;
+
+const navigationMenu = catalogNavigation.length > 0
+  ? catalogNavigation.map((item) => ({
+    label: item.name,
+    href: `/san-pham?category=${item.slug}`,
+    subCategories: [] as { name: string; href: string }[],
+    brands: [] as { name: string; slug: string }[],
+  }))
+  : megaMenu;
 
 const quickLinks = [
   { label: "Khuyến mãi", href: "/#featured" },
@@ -191,7 +160,7 @@ export function SiteHeader() {
         <BrandMark />
 
         <nav aria-label="Điều hướng chính" className="hidden items-center gap-1 lg:flex" onMouseLeave={() => setActiveMega(null)}>
-          {megaMenu.map((item) => (
+          {navigationMenu.map((item) => (
             <div key={item.label} onMouseEnter={() => setActiveMega(item.label)}>
               <Link
                 href={item.href}
@@ -242,7 +211,7 @@ export function SiteHeader() {
           onMouseLeave={() => setActiveMega(null)}
         >
           <div className="mx-auto max-w-page px-4 py-6 sm:px-6 lg:px-8">
-            {megaMenu.filter((m) => m.label === activeMega).map((item) => (
+            {navigationMenu.filter((m) => m.label === activeMega).map((item) => (
               <div key={item.label} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Danh mục</p>
@@ -319,7 +288,7 @@ export function SiteHeader() {
               <div className="mt-5 border-t border-slate-100 pt-5">
                 <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Danh mục phổ biến</p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {megaMenu.map((item) => (
+                  {navigationMenu.map((item) => (
                     <Link
                       key={item.label}
                       href={item.href}
@@ -350,7 +319,7 @@ export function SiteHeader() {
       {menuOpen ? (
         <nav id="mobile-navigation" aria-label="Điều hướng di động" className="border-t border-slate-200 bg-white px-4 py-3 lg:hidden">
           <div className="mx-auto grid max-w-page gap-1">
-            {megaMenu.map((item) => (
+            {navigationMenu.map((item) => (
               <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="flex min-h-11 items-center rounded-xl px-3 font-semibold text-slate-700 hover:bg-slate-50 hover:text-electric">
                 {item.label}
               </Link>

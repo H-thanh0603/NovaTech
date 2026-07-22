@@ -79,11 +79,12 @@ export function ProductDetail({ product, relatedProducts = [] }: ProductDetailPr
   const added = cartState?.success === true;
   const selectedVariant = product.variants.find((v) => v.sku === selectedSku) ?? product.variants[0];
   const displayPrice = selectedVariant?.price ?? product.price;
-  const hasDiscount = selectedVariant?.compareAtPrice
+  const isContactOnly = product.priceStatus === "CONTACT";
+  const hasDiscount = !isContactOnly && (selectedVariant?.compareAtPrice
     ? selectedVariant.compareAtPrice > displayPrice
     : product.compareAtPrice
       ? product.compareAtPrice > displayPrice
-      : false;
+      : false);
   const discountPercent = hasDiscount
     ? Math.round(
         (1 - displayPrice / (selectedVariant?.compareAtPrice ?? product.compareAtPrice!)) * 100,
@@ -153,7 +154,7 @@ export function ProductDetail({ product, relatedProducts = [] }: ProductDetailPr
           </div>
 
           <div className="flex items-end gap-3">
-            <p className="font-display text-3xl font-bold tracking-[-0.03em] text-midnight">{formatVnd(displayPrice)}</p>
+            <p className="font-display text-3xl font-bold tracking-[-0.03em] text-midnight">{isContactOnly ? "Liên hệ" : formatVnd(displayPrice)}</p>
             {hasDiscount ? (
               <div className="flex items-center gap-2 pb-1">
                 <p className="text-sm text-slate-400 line-through">{formatVnd(selectedVariant?.compareAtPrice ?? product.compareAtPrice!)}</p>

@@ -8,9 +8,10 @@ const footerGroups = [
     title: "Khám phá",
     links: [
       { label: "Laptop", href: "/san-pham?category=laptop" },
-      { label: "Điện thoại", href: "/san-pham?category=dien-thoai" },
-      { label: "Đồng hồ thông minh", href: "/san-pham?category=dong-ho-thong-minh" },
+      { label: "Màn hình", href: "/san-pham?category=man-hinh" },
+      { label: "Gaming Gear", href: "/san-pham?category=gaming" },
       { label: "Âm thanh", href: "/san-pham?category=am-thanh" },
+      { label: "Linh kiện PC", href: "/san-pham?category=phu-kien" },
       { label: "Tất cả sản phẩm", href: "/san-pham" },
       { label: "Khuyến mãi", href: "/khuyen-mai" },
       { label: "Thu cũ đổi mới", href: "/thu-cu-doi-moi" },

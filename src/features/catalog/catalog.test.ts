@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { InMemoryCatalogRepository } from "./catalog.repository";
+import { catalogProducts } from "./catalog.data";
 import { formatVnd, formatReviewDate, getFeaturedProducts, getProductBySlug, listBrands, listCategories, listProducts } from "./catalog.service";
 import type { CatalogProduct } from "./catalog.types";
 
@@ -77,10 +78,11 @@ describe("catalog listing", () => {
 
   it("filters by category slug", async () => {
     const repository = new InMemoryCatalogRepository();
-    const result = await listProducts(repository, { categorySlug: "laptop", pageSize: 999 });
+    const [category] = await listCategories(repository);
+    const result = await listProducts(repository, { categorySlug: category.slug, pageSize: 999 });
 
     expect(result.total).toBeGreaterThan(0);
-    expect(result.items.every((p) => p.category === "Laptop")).toBe(true);
+    expect(result.items.every((p) => p.category === category.name)).toBe(true);
   });
 
   it("sorts by price ascending", async () => {
@@ -124,14 +126,15 @@ describe("catalog listing", () => {
 describe("product detail", () => {
   it("returns product detail by slug", async () => {
     const repository = new InMemoryCatalogRepository();
-    const detail = await getProductBySlug(repository, "macbook-air-m4-13");
+    const product = catalogProducts.find((item) => item.variants && item.variants.length > 0)!;
+    const detail = await getProductBySlug(repository, product.slug);
 
     expect(detail).not.toBeNull();
-    expect(detail!.name).toBe("MacBook Air M4 13\"");
+    expect(detail!.name).toBe(product.name);
     expect(detail!.variants.length).toBeGreaterThan(0);
     expect(detail!.highlights.length).toBeGreaterThan(0);
-    expect(detail!.considerations.length).toBeGreaterThan(0);
-    expect(detail!.reviews.length).toBeGreaterThan(0);
+    expect(detail!.considerations).toEqual([]);
+    expect(detail!.reviews).toEqual([]);
   });
 
   it("returns null for unknown slug", async () => {
@@ -143,7 +146,8 @@ describe("product detail", () => {
 
   it("returns frozen detail object", async () => {
     const repository = new InMemoryCatalogRepository();
-    const detail = await getProductBySlug(repository, "iphone-16-pro");
+    const product = catalogProducts.find((item) => item.variants && item.variants.length > 0)!;
+    const detail = await getProductBySlug(repository, product.slug);
 
     expect(Object.isFrozen(detail)).toBe(true);
     expect(Object.isFrozen(detail!.variants)).toBe(true);
@@ -157,7 +161,7 @@ describe("categories and brands", () => {
     const categories = await listCategories(repository);
 
     expect(categories.length).toBeGreaterThan(0);
-    expect(categories.some((c) => c.slug === "laptop")).toBe(true);
+    expect(categories.some((c) => c.slug === "may-tinh")).toBe(true);
   });
 
   it("lists all brands", async () => {
@@ -165,7 +169,7 @@ describe("categories and brands", () => {
     const brands = await listBrands(repository);
 
     expect(brands.length).toBeGreaterThan(0);
-    expect(brands.some((b) => b.slug === "apple")).toBe(true);
+    expect(brands.some((b) => b.slug === "acer")).toBe(true);
   });
 });
 

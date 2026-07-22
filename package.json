@@ -17,6 +17,7 @@
     "db:generate": "prisma generate",
     "db:validate": "prisma validate",
     "db:seed": "prisma db seed",
+    "catalog:sync": "tsx scripts/sync-cphub-catalog.ts",
     "verify": "npm run db:generate && npm run db:validate && npm run lint && npm run typecheck && npm run test && npm run build"
   },
   "overrides": {

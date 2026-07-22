@@ -4,6 +4,7 @@ export type CatalogProduct = Readonly<{
   name: string;
   category: string;
   price: number;
+  priceStatus?: "AVAILABLE" | "CONTACT";
   compareAtPrice?: number;
   imageUrl: string;
   imageAlt: string;
@@ -14,6 +15,19 @@ export type CatalogProduct = Readonly<{
   tags?: readonly string[];
   soldCount?: number;
   releaseDate?: string;
+  sourceUrl?: string;
+  sourceUpdatedAt?: string;
+  brand?: string;
+  brandSlug?: string;
+  media?: readonly CatalogMedia[];
+  variants?: readonly CatalogVariant[];
+}>;
+
+export type CatalogNavigationItem = Readonly<{
+  id: string;
+  name: string;
+  slug: string;
+  count: number;
 }>;
 
 export type CatalogCategory = Readonly<{
@@ -69,6 +83,7 @@ export type CatalogProductDetail = Readonly<{
   description: string;
   shortDescription: string;
   price: number;
+  priceStatus?: "AVAILABLE" | "CONTACT";
   compareAtPrice?: number;
   verdict: string;
   highlights: readonly string[];
@@ -79,6 +94,8 @@ export type CatalogProductDetail = Readonly<{
   reviews: readonly CatalogReview[];
   badge?: string;
   featured: boolean;
+  sourceUrl?: string;
+  sourceUpdatedAt?: string;
 }>;
 
 export type ProductSortOption = "featured" | "price-asc" | "price-desc" | "name-asc" | "newest" | "best-selling";
