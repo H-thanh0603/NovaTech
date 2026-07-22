@@ -1578,5 +1578,517 @@ export const catalogProducts: readonly CatalogProduct[] = [
       "Calman Verified"
     ],
     "featured": false
+  },
+  {
+    "id": "cphub-laptop-acer-aspire-lite-14",
+    "slug": "laptop-acer-aspire-lite-14-al14-45p",
+    "name": "Laptop Acer Aspire Lite 14 AL14-45P",
+    "category": "Laptop",
+    "price": 15490000,
+    "compareAtPrice": 15990000,
+    "imageUrl": "https://picsum.photos/seed/acer-aspire-lite-14/1200/1200",
+    "imageAlt": "Laptop Acer Aspire Lite 14 AL14-45P",
+    "verdict": "Laptop văn phòng mỏng nhẹ, vỏ nhôm, pin khá và giá hợp lý cho sinh viên.",
+    "specs": [
+      "Ryzen 3 5400U",
+      "RAM 8 GB",
+      "SSD 512 GB",
+      "14 inch FHD+"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-laptop-msi-katana-15",
+    "slug": "laptop-msi-gaming-katana-15-hx",
+    "name": "Laptop MSI Gaming Katana 15 HX",
+    "category": "Laptop",
+    "price": 32490000,
+    "imageUrl": "https://picsum.photos/seed/msi-katana-15-hx/1200/1200",
+    "imageAlt": "Laptop MSI Gaming Katana 15 HX",
+    "verdict": "Laptop gaming cấu hình mạnh với RTX 5050, màn QHD 165Hz cho game thủ.",
+    "specs": [
+      "i5 14450HX",
+      "RAM 16 GB",
+      "SSD 512 GB",
+      "RTX 5050 8GB",
+      "15.6 inch QHD 165Hz"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-laptop-acer-aspire-15",
+    "slug": "laptop-acer-aspire-lite-15-al15-42p",
+    "name": "Laptop Acer Aspire Lite 15 AL15-42P",
+    "category": "Laptop",
+    "price": 16990000,
+    "imageUrl": "https://picsum.photos/seed/acer-aspire-15/1200/1200",
+    "imageAlt": "Laptop Acer Aspire Lite 15 AL15-42P",
+    "verdict": "Laptop văn phòng AMD Ryzen 5, màn 15.6 inch rộng rãi, phù hợp làm việc.",
+    "specs": [
+      "Ryzen 5 7430U",
+      "RAM 16 GB",
+      "SSD 512 GB",
+      "15.6 inch FHD"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-laptop-acer-aspire-5",
+    "slug": "laptop-acer-aspire-5-a515-56",
+    "name": "Laptop Acer Aspire 5 A515-56",
+    "category": "Laptop",
+    "price": 7597000,
+    "imageUrl": "https://picsum.photos/seed/acer-aspire-5/1200/1200",
+    "imageAlt": "Laptop Acer Aspire 5 A515-56",
+    "verdict": "Laptop giá rẻ cho nhu cầu cơ bản, lướt web và làm việc văn phòng.",
+    "specs": [
+      "i3-1115G4",
+      "RAM 4 GB",
+      "SSD 128 GB",
+      "15.6 inch FHD"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-man-hinh-aoc-27b1h",
+    "slug": "man-hinh-aoc-27b1h-74",
+    "name": "Màn hình AOC 27B1H/74 27\"",
+    "category": "Màn hình",
+    "price": 2524500,
+    "imageUrl": "https://picsum.photos/seed/aoc-27b1h/1200/1200",
+    "imageAlt": "Màn hình AOC 27B1H/74 27 inch",
+    "verdict": "Màn hình IPS 27 inch giá tốt cho văn phòng và giải trí cơ bản.",
+    "specs": [
+      "27 inch IPS",
+      "60Hz",
+      "HDMI + VGA"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-man-hinh-asus-proart-pa278qv",
+    "slug": "man-hinh-asus-pro-art-pa278qv",
+    "name": "Màn hình ASUS ProArt PA278QV 27\"",
+    "category": "Màn hình",
+    "price": 7479300,
+    "imageUrl": "https://picsum.photos/seed/asus-proart-pa278qv/1200/1200",
+    "imageAlt": "Màn hình ASUS ProArt PA278QV 27 inch 2K",
+    "verdict": "Màn hình 2K IPS cho đồ họa và thiết kế, màu sắc chính xác.",
+    "specs": [
+      "27 inch 2K IPS",
+      "75Hz",
+      "100% sRGB"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-man-hinh-asus-tuf-vg27vq",
+    "slug": "man-hinh-asus-tuf-gaming-vg27vq",
+    "name": "Màn hình ASUS TUF Gaming VG27VQ 27\"",
+    "category": "Màn hình",
+    "price": 4504500,
+    "imageUrl": "https://picsum.photos/seed/asus-tuf-vg27vq/1200/1200",
+    "imageAlt": "Màn hình ASUS TUF Gaming VG27VQ 27 inch",
+    "verdict": "Màn hình gaming cong 165Hz, phản hồi 1ms, giá hợp lý.",
+    "specs": [
+      "27 inch VA cong",
+      "165Hz",
+      "1ms",
+      "FreeSync"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-man-hinh-msi-optix-g24c4",
+    "slug": "man-hinh-msi-optix-g24c4",
+    "name": "Màn hình MSI Optix G24C4 23.6\"",
+    "category": "Màn hình",
+    "price": 2634500,
+    "imageUrl": "https://picsum.photos/seed/msi-g24c4/1200/1200",
+    "imageAlt": "Màn hình MSI Optix G24C4 23.6 inch",
+    "verdict": "Màn hình gaming 144Hz nhập môn, kích thước vừa phải cho bàn nhỏ.",
+    "specs": [
+      "23.6 inch VA cong",
+      "144Hz",
+      "1ms"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-man-hinh-philips-241v8",
+    "slug": "man-hinh-philips-241v8-74",
+    "name": "Màn hình PHILIPS 241V8/74 24\"",
+    "category": "Màn hình",
+    "price": 2183500,
+    "imageUrl": "https://picsum.photos/seed/philips-241v8/1200/1200",
+    "imageAlt": "Màn hình PHILIPS 241V8/74 24 inch",
+    "verdict": "Màn hình IPS 24 inch giá rẻ, phù hợp văn phòng.",
+    "specs": [
+      "24 inch IPS",
+      "75Hz",
+      "HDMI + VGA"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-man-hinh-philips-322m8cz",
+    "slug": "man-hinh-philips-322m8cz-74",
+    "name": "Màn hình PHILIPS 322M8CZ/74 31.5\"",
+    "category": "Màn hình",
+    "price": 4394500,
+    "imageUrl": "https://picsum.photos/seed/philips-322m8cz/1200/1200",
+    "imageAlt": "Màn hình PHILIPS 322M8CZ/74 31.5 inch",
+    "verdict": "Màn hình gaming lớn 31.5 inch, 165Hz cho trải nghiệm ấn tượng.",
+    "specs": [
+      "31.5 inch VA cong",
+      "165Hz",
+      "1ms",
+      "FreeSync"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-ban-phim-zidli-zgk98-pro",
+    "slug": "ban-phim-zidli-zgk98-pro",
+    "name": "Bàn phím Zidli ZGK98 Pro",
+    "category": "Gaming",
+    "price": 950000,
+    "compareAtPrice": 1050000,
+    "imageUrl": "https://picsum.photos/seed/zidli-zgk98-pro/1200/1200",
+    "imageAlt": "Bàn phím Zidli ZGK98 Pro",
+    "verdict": "Bàn phím cơ compact 98% với RGB, hot-swap switch.",
+    "specs": [
+      "98% layout",
+      "Hot-swap",
+      "RGB"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-ban-phim-dareu-ek87-blue",
+    "slug": "ban-phim-co-dareu-ek87-wire-black-blue-switch",
+    "name": "Bàn phím cơ DAREU EK87 Wire Blue Switch",
+    "category": "Gaming",
+    "price": 480000,
+    "imageUrl": "https://picsum.photos/seed/dareu-ek87-blue/1200/1200",
+    "imageAlt": "Bàn phím cơ DAREU EK87 Wire Black Blue Switch",
+    "verdict": "Bàn phím cơ TKL giá tốt, Blue switch clicky cho người thích gõ phím.",
+    "specs": [
+      "87 key TKL",
+      "Blue Switch",
+      "Có dây USB"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-ban-phim-dareu-ek87-red",
+    "slug": "ban-phim-co-dareu-ek87-wire-black-red-switch",
+    "name": "Bàn phím cơ DAREU EK87 Wire Red Switch",
+    "category": "Gaming",
+    "price": 468000,
+    "imageUrl": "https://picsum.photos/seed/dareu-ek87-red/1200/1200",
+    "imageAlt": "Bàn phím cơ DAREU EK87 Wire Black Red Switch",
+    "verdict": "Bàn phím cơ TKL Red switch, êm và nhanh cho game và gõ phím.",
+    "specs": [
+      "87 key TKL",
+      "Red Switch",
+      "Có dây USB"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-ban-phim-dareu-lk135",
+    "slug": "ban-phim-dareu-lk135-wire-black",
+    "name": "Bàn phím DAREU LK135 Wire Black",
+    "category": "Gaming",
+    "price": 192000,
+    "imageUrl": "https://picsum.photos/seed/dareu-lk135/1200/1200",
+    "imageAlt": "Bàn phím DAREU LK135 Wire Black",
+    "verdict": "Bàn phím membrane giá rẻ, bền bỉ cho văn phòng.",
+    "specs": [
+      "Membrane",
+      "Có dây USB",
+      "Phím chống tràn"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-chuot-zgm05w",
+    "slug": "chuot-khong-day-zgm05-w",
+    "name": "Chuột không dây ZGM05-W",
+    "category": "Gaming",
+    "price": 980000,
+    "compareAtPrice": 1190000,
+    "imageUrl": "https://picsum.photos/seed/zgm05w/1200/1200",
+    "imageAlt": "Chuột không dây ZGM05-W",
+    "verdict": "Chuột wireless nhẹ, pin lâu, sensor tốt cho cả game và làm việc.",
+    "specs": [
+      "Wireless 2.4G",
+      "Pin 500 giờ",
+      "10.000 DPI"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-chuot-zidli-zm500",
+    "slug": "chuot-gaming-zidli-zm500",
+    "name": "Chuột Gaming Zidli ZM500",
+    "category": "Gaming",
+    "price": 460000,
+    "compareAtPrice": 580000,
+    "imageUrl": "https://picsum.photos/seed/zidli-zm500/1200/1200",
+    "imageAlt": "Chuột Gaming cao cấp Zidli ZM500",
+    "verdict": "Chuột gaming giá rẻ, RGB, sensor chính xác cho game thủ ngân sách thấp.",
+    "specs": [
+      "Có dây USB",
+      "12.000 DPI",
+      "RGB"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-chuot-dareu-lm103",
+    "slug": "chuot-dareu-lm103-wired",
+    "name": "Chuột DAREU LM103S Wired RGB",
+    "category": "Phụ kiện",
+    "price": 108000,
+    "imageUrl": "https://picsum.photos/seed/dareu-lm103s/1200/1200",
+    "imageAlt": "Chuột DAREU LM103S Wired USB RGB",
+    "verdict": "Chuột văn phòng giá siêu rẻ, RGB nhẹ, bền bỉ.",
+    "specs": [
+      "Có dây USB",
+      "1000 DPI",
+      "RGB"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-tai-nghe-zidli-fh31",
+    "slug": "tai-nghe-zidli-khong-day-fh31-ultra",
+    "name": "Tai nghe Zidli không dây FH31 Ultra",
+    "category": "Âm thanh",
+    "price": 2350000,
+    "compareAtPrice": 2550000,
+    "imageUrl": "https://picsum.photos/seed/zidli-fh31/1200/1200",
+    "imageAlt": "Tai nghe Zidli không dây FH31 Ultra",
+    "verdict": "Tai nghe Bluetooth chống ồn, pin lâu, âm thanh rõ cho cả nhạc và gọi.",
+    "specs": [
+      "Bluetooth 5.3",
+      "ANC",
+      "Pin 40 giờ"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-tai-nghe-jd-m31",
+    "slug": "tai-nghe-gaming-jd-m31",
+    "name": "Tai nghe Gaming JD M31",
+    "category": "Âm thanh",
+    "price": 780000,
+    "compareAtPrice": 890000,
+    "imageUrl": "https://picsum.photos/seed/jd-m31/1200/1200",
+    "imageAlt": "Tai nghe gaming cao cấp JD M31",
+    "verdict": "Tai nghe gaming có dây, mic rõ, bass mạnh cho game thủ.",
+    "specs": [
+      "Có dây 3.5mm",
+      "7.1 Surround",
+      "RGB"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-combo-gaming-cam",
+    "slug": "combo-chuot-ban-phim-tai-nghe-cam",
+    "name": "Combo chuột, bàn phím, tai nghe (Cam)",
+    "category": "Gaming",
+    "price": 2500000,
+    "compareAtPrice": 2780000,
+    "imageUrl": "https://picsum.photos/seed/combo-gaming-cam/1200/1200",
+    "imageAlt": "Combo chuột bàn phím tai nghe gaming màu cam",
+    "verdict": "Combo 3-in-1 đầy đủ cho setup gaming nhập môn, tiết kiệm chi phí.",
+    "specs": [
+      "Bàn phím + Chuột + Tai nghe",
+      "RGB",
+      "Có dây"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-de-tan-nhiet-redragon",
+    "slug": "de-tan-nhiet-laptop-redragon-gcp500",
+    "name": "Đế tản nhiệt Laptop REDRAGON GCP500",
+    "category": "Phụ kiện",
+    "price": 799000,
+    "compareAtPrice": 890000,
+    "imageUrl": "https://picsum.photos/seed/redragon-gcp500/1200/1200",
+    "imageAlt": "Đế tản nhiệt Laptop REDRAGON 15in 5FAN LED RGB",
+    "verdict": "Đế tản nhiệt 5 quạt RGB, làm mát hiệu quả cho laptop gaming.",
+    "specs": [
+      "5 quạt LED RGB",
+      "15 inch",
+      "USB powered"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-card-do-hoa-ocpc-gtx1660s",
+    "slug": "card-do-hoa-ocpc-gtx1660s-6gb",
+    "name": "Card đồ họa OCPC GTX1660S 6GB",
+    "category": "Gaming",
+    "price": 5145000,
+    "compareAtPrice": 6199000,
+    "imageUrl": "https://picsum.photos/seed/ocpc-gtx1660s/1200/1200",
+    "imageAlt": "Card đồ họa OCPC GTX1660S 6GB GDDR6",
+    "verdict": "Card đồ họa cũ giá tốt, đủ mạnh cho game 1080p medium-high.",
+    "specs": [
+      "GTX 1660 Super",
+      "6GB GDDR6",
+      "192-bit"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-bo-mach-chu-asus-h610m",
+    "slug": "bo-mach-chu-asus-prime-h610m-kd4",
+    "name": "Bo mạch chủ ASUS Prime H610M-KD4",
+    "category": "Phụ kiện",
+    "price": 1710500,
+    "imageUrl": "https://picsum.photos/seed/asus-h610m-kd4/1200/1200",
+    "imageAlt": "Bo mạch chủ ASUS Prime H610M-KD4",
+    "verdict": "Mainboard DDR4 giá rẻ cho Intel 12th gen, ổn định cho văn phòng.",
+    "specs": [
+      "LGA 1700",
+      "DDR4",
+      "M.2 NVMe"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-cpu-intel-i3-10105f",
+    "slug": "cpu-intel-core-i3-10105f-tray",
+    "name": "CPU Intel Core i3-10105F Tray",
+    "category": "Phụ kiện",
+    "price": 1606000,
+    "imageUrl": "https://picsum.photos/seed/intel-i3-10105f/1200/1200",
+    "imageAlt": "Bộ vi xử lý Intel Core i3-10105F Tray",
+    "verdict": "CPU giá rẻ cho build văn phòng, đủ mạnh cho lướt web và làm việc cơ bản.",
+    "specs": [
+      "4 nhân 8 luồng",
+      "LGA 1200",
+      "Không GPU"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-cpu-intel-i5-12400f",
+    "slug": "cpu-intel-core-i5-12400f-tray",
+    "name": "CPU Intel Core i5-12400F Tray",
+    "category": "Phụ kiện",
+    "price": 4048000,
+    "imageUrl": "https://picsum.photos/seed/intel-i5-12400f/1200/1200",
+    "imageAlt": "Bộ vi xử lý Intel Core i5-12400F Tray",
+    "verdict": "CPU gaming giá tốt 6 nhân 12 luồng, phổ biến cho build tầm trung.",
+    "specs": [
+      "6 nhân 12 luồng",
+      "LGA 1700",
+      "Không GPU"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-cpu-intel-i7-12700f",
+    "slug": "cpu-intel-core-i7-12700f-tray",
+    "name": "CPU Intel Core i7-12700F Tray",
+    "category": "Phụ kiện",
+    "price": 8346000,
+    "imageUrl": "https://picsum.photos/seed/intel-i7-12700f/1200/1200",
+    "imageAlt": "Bộ vi xử lý Intel Core i7-12700F Tray",
+    "verdict": "CPU 12 nhân cho productivity và gaming cao cấp, đáng tiền.",
+    "specs": [
+      "12 nhân 20 luồng",
+      "LGA 1700",
+      "Không GPU"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-cpu-amd-ryzen5-5500",
+    "slug": "cpu-amd-ryzen-5-5500-box",
+    "name": "CPU AMD Ryzen 5 5500 BOX",
+    "category": "Phụ kiện",
+    "price": 2035000,
+    "imageUrl": "https://picsum.photos/seed/ryzen5-5500/1200/1200",
+    "imageAlt": "Bộ vi xử lý AMD Ryzen 5 5500 BOX",
+    "verdict": "CPU AMD 6 nhân giá tốt, kèm tản nhiệt, phù hợp build tầm trung.",
+    "specs": [
+      "6 nhân 12 luồng",
+      "AM4",
+      "Có tản nhiệt"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-cpu-amd-ryzen7-5800x",
+    "slug": "cpu-amd-ryzen-7-5800x-box",
+    "name": "CPU AMD Ryzen 7 5800X BOX",
+    "category": "Phụ kiện",
+    "price": 4950000,
+    "imageUrl": "https://picsum.photos/seed/ryzen7-5800x/1200/1200",
+    "imageAlt": "Bộ vi xử lý AMD Ryzen 7 5800X BOX",
+    "verdict": "CPU 8 nhân 16 luồng cho gaming và productivity, giá tốt trên AM4.",
+    "specs": [
+      "8 nhân 16 luồng",
+      "AM4",
+      "Không tản nhiệt"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-nguon-gigabyte-750w",
+    "slug": "nguon-gigabyte-gp-p750gm",
+    "name": "Nguồn Gigabyte GP-P750GM 750W",
+    "category": "Phụ kiện",
+    "price": 1534500,
+    "imageUrl": "https://picsum.photos/seed/gigabyte-750w/1200/1200",
+    "imageAlt": "Nguồn máy tính Gigabyte GP-P750GM 750W 80 Plus Gold",
+    "verdict": "Nguồn 750W Gold cho build mid-range, ổn định và hiệu quả.",
+    "specs": [
+      "750W",
+      "80 Plus Gold",
+      "Modular"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-switch-tenda-teg1016m",
+    "slug": "switch-tenda-teg1016m",
+    "name": "Switch Tenda TEG1016M 16 Port",
+    "category": "Phụ kiện",
+    "price": 981818,
+    "imageUrl": "https://picsum.photos/seed/tenda-teg1016m/1200/1200",
+    "imageAlt": "Switch Tenda TEG1016M 16 Port Gigabit",
+    "verdict": "Switch 16 port Gigabit giá rẻ cho mạng văn phòng nhỏ.",
+    "specs": [
+      "16 Port",
+      "Gigabit",
+      "Plug & Play"
+    ],
+    "featured": false
+  },
+  {
+    "id": "cphub-wifi-tenda-f3",
+    "slug": "bo-phat-wifi-tenda-f3",
+    "name": "Bộ phát WiFi Tenda F3 N300",
+    "category": "Phụ kiện",
+    "price": 264000,
+    "imageUrl": "https://picsum.photos/seed/tenda-f3/1200/1200",
+    "imageAlt": "Bộ phát WiFi Tenda F3 N300Mbps",
+    "verdict": "Router WiFi giá rẻ cho căn hộ nhỏ, dễ cài đặt.",
+    "specs": [
+      "N300Mbps",
+      "3 ăng-ten",
+      "2.4GHz"
+    ],
+    "featured": false
   }
 ];
