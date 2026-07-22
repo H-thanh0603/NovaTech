@@ -41,7 +41,7 @@ describe("checkout form component", () => {
     expect(markup).toContain('type="email"');
   });
 
-  it("renders coupon field", () => {
+  it("renders hidden coupon field for form submission", () => {
     const markup = renderToStaticMarkup(<CheckoutForm cart={mockCart} />);
     expect(markup).toContain('name="couponCode"');
   });
@@ -51,9 +51,10 @@ describe("checkout form component", () => {
     expect(markup).toContain("Test Laptop");
   });
 
-  it("renders place order button", () => {
+  it("renders checkout step indicator and continue button", () => {
     const markup = renderToStaticMarkup(<CheckoutForm cart={mockCart} />);
-    expect(markup).toContain("Đặt hàng");
+    expect(markup).toContain("Giao hàng");
+    expect(markup).toContain("Tiếp tục");
   });
 
   it("renders empty state when cart is empty", () => {
