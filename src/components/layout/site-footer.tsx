@@ -13,6 +13,7 @@ const footerGroups = [
       { label: "Âm thanh", href: "/san-pham?category=am-thanh" },
       { label: "Tất cả sản phẩm", href: "/san-pham" },
       { label: "Khuyến mãi", href: "/khuyen-mai" },
+      { label: "Thu cũ đổi mới", href: "/thu-cu-doi-moi" },
     ],
   },
   {
