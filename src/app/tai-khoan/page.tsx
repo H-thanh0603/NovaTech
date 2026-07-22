@@ -4,6 +4,7 @@ import Link from "next/link";
 import { KeyRound, MapPin, Package, UserRound } from "lucide-react";
 
 import { AccountNav } from "@/components/auth/account-nav";
+import { LoyaltyCard } from "@/components/account/loyalty-card";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { getUserFromSession, SESSION_COOKIE_NAME } from "@/features/auth/auth.service";
@@ -63,6 +64,7 @@ export default async function AccountPage() {
 
             <div className="flex-1 flex flex-col gap-6">
               <AccountNav user={user} />
+              <LoyaltyCard />
               <div className="rounded-panel border border-slate-200 bg-white p-5 sm:p-6">
                 <h2 className="font-display text-lg font-bold text-midnight">Thông tin cá nhân</h2>
                 <dl className="mt-4 flex flex-col gap-3">
